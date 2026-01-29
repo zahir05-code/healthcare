@@ -12,8 +12,8 @@ export function ActionButtons() {
 
   const handleAction = (action: string, description: string) => {
     toast({
-      title: `Action Logged: ${action}`,
-      description: `${description} at ${new Date().toLocaleTimeString()}`,
+      title: `기록된 활동: ${action}`,
+      description: `${description} (${new Date().toLocaleTimeString()})`,
     });
     // In a real app, this would trigger a server action to save to Firestore.
     console.log(`Action: ${action}, Timestamp: ${new Date().toISOString()}`);
@@ -21,40 +21,40 @@ export function ActionButtons() {
 
   const actions = [
     {
-      label: 'Call',
+      label: '전화',
       icon: Phone,
       color: 'bg-green-500 hover:bg-green-600',
       isDialog: true,
     },
     {
-      label: 'Medication',
+      label: '복약',
       icon: Pill,
       color: 'bg-blue-500 hover:bg-blue-600',
-      action: () => handleAction('Medication', 'Medication taken confirmation logged.'),
+      action: () => handleAction('복약', '복약 확인이 기록되었습니다.'),
     },
     {
-      label: 'View Schedule',
+      label: '일정 보기',
       icon: Calendar,
       color: 'bg-purple-500 hover:bg-purple-600',
       isLink: true,
       href: '/senior/schedule',
     },
     {
-      label: 'Translate',
+      label: '번역',
       icon: Languages,
       color: 'bg-orange-500 hover:bg-orange-600',
       isLink: true,
       href: '/senior/translate',
     },
     {
-      label: 'Health Log',
+      label: '건강 기록',
       icon: ClipboardPlus,
       color: 'bg-teal-500 hover:bg-teal-600',
       isLink: true,
       href: '/senior/health',
     },
     {
-      label: 'SOS',
+      label: '긴급 호출',
       icon: Siren,
       color: 'bg-red-600 hover:bg-red-700',
     },
@@ -74,7 +74,7 @@ export function ActionButtons() {
 
         const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
 
-        if (item.label === 'SOS') {
+        if (item.label === '긴급 호출') {
             return (
                 <SosDialog key={item.label}>
                     <Button

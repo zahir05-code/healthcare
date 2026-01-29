@@ -20,8 +20,8 @@ export function CallDialog({ children }: { children: React.ReactNode }) {
 
   const handleCall = (name: string, phone: string) => {
     toast({
-      title: `Calling ${name}`,
-      description: `Dialing ${phone}`,
+      title: `${name}에게 전화하는 중`,
+      description: `${phone}으로 전화 거는 중`,
     });
     // On a real device, this would initiate a call
     // window.location.href = `tel:${phone}`;
@@ -33,9 +33,9 @@ export function CallDialog({ children }: { children: React.ReactNode }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Emergency Contacts</DialogTitle>
+          <DialogTitle>비상 연락처</DialogTitle>
           <DialogDescription>
-            Select a person to call in an emergency.
+            비상시 전화할 사람을 선택하세요.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-2">

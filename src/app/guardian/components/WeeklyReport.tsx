@@ -9,7 +9,7 @@ import { AlertTriangle } from 'lucide-react';
 
 const chartData = [
   {
-    name: 'This Week',
+    name: '이번 주',
     adherence: reportData.medicationAdherence,
     goal: 100,
   },
@@ -17,11 +17,11 @@ const chartData = [
 
 const chartConfig = {
   adherence: {
-    label: 'Adherence',
+    label: '준수율',
     color: 'hsl(var(--primary))',
   },
   goal: {
-    label: 'Goal',
+    label: '목표',
     color: 'hsl(var(--muted))',
   },
 } satisfies ChartConfig;
@@ -30,18 +30,18 @@ export function WeeklyReport() {
   return (
     <Card className="h-full flex flex-col">
       <CardHeader>
-        <CardTitle>Weekly Report</CardTitle>
-        <CardDescription>Summary for {seniorUser.name}</CardDescription>
+        <CardTitle>주간 보고서</CardTitle>
+        <CardDescription>{seniorUser.name}님 요약</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col justify-between">
         <div>
           <p className="text-sm text-muted-foreground italic mb-4">"{reportData.summary}"</p>
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium">Activity Level:</span>
+            <span className="text-sm font-medium">활동 수준:</span>
             <Badge variant="secondary" className="capitalize">{reportData.activityLevel}</Badge>
           </div>
           <div className="flex items-center justify-between mb-6">
-            <span className="text-sm font-medium">SOS Requests:</span>
+            <span className="text-sm font-medium">긴급 호출 요청:</span>
             <div className="flex items-center gap-2">
               <span className={`font-bold ${reportData.sosRequests > 0 ? 'text-red-500' : ''}`}>
                 {reportData.sosRequests}
@@ -52,7 +52,7 @@ export function WeeklyReport() {
         </div>
         
         <div>
-          <h3 className="text-md font-semibold mb-2 text-center">Medication Adherence</h3>
+          <h3 className="text-md font-semibold mb-2 text-center">복약 준수율</h3>
           <div className="w-full h-48">
             <ChartContainer config={chartConfig} className="h-full w-full">
               <BarChart accessibilityLayer data={chartData} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>

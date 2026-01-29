@@ -3,6 +3,7 @@ import type { Schedule } from '@/lib/types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Pill, Phone, Stethoscope, Calendar as CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 function getIcon(type: Schedule['type']) {
     switch (type) {
@@ -37,7 +38,7 @@ export function ScheduleView() {
                         </CardHeader>
                         <CardContent>
                             <p className="text-lg font-semibold text-primary">
-                                {format(item.startTime, 'p')}
+                                {format(item.startTime, 'p', { locale: ko })}
                             </p>
                         </CardContent>
                     </Card>
@@ -45,10 +46,10 @@ export function ScheduleView() {
             ) : (
                 <Card className="shadow-md text-center">
                     <CardHeader>
-                        <CardTitle>All Done!</CardTitle>
+                        <CardTitle>모두 완료!</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-muted-foreground">You have no more items on your schedule for today.</p>
+                        <p className="text-muted-foreground">오늘 더 이상 예정된 일정이 없습니다.</p>
                     </CardContent>
                 </Card>
             )}

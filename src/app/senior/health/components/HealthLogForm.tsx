@@ -19,9 +19,9 @@ import { Loader } from 'lucide-react';
 import { useState } from 'react';
 
 const healthLogSchema = z.object({
-  bloodPressureSystolic: z.coerce.number().min(50, "Invalid value").max(300, "Invalid value"),
-  bloodPressureDiastolic: z.coerce.number().min(30, "Invalid value").max(200, "Invalid value"),
-  bloodSugar: z.coerce.number().min(30, "Invalid value").max(600, "Invalid value"),
+  bloodPressureSystolic: z.coerce.number().min(50, "유효하지 않은 값").max(300, "유효하지 않은 값"),
+  bloodPressureDiastolic: z.coerce.number().min(30, "유효하지 않은 값").max(200, "유효하지 않은 값"),
+  bloodSugar: z.coerce.number().min(30, "유효하지 않은 값").max(600, "유효하지 않은 값"),
 });
 
 type HealthLogFormValues = z.infer<typeof healthLogSchema>;
@@ -46,8 +46,8 @@ export function HealthLogForm() {
 
     setTimeout(() => {
       toast({
-        title: 'Health Log Saved',
-        description: 'Your vitals have been recorded successfully.',
+        title: '건강 기록 저장됨',
+        description: '활력 징후가 성공적으로 기록되었습니다.',
       });
       form.reset();
       setIsLoading(false);
@@ -57,22 +57,22 @@ export function HealthLogForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>New Entry</CardTitle>
+        <CardTitle>새 항목</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
-                <p className="font-medium">Blood Pressure (mmHg)</p>
+                <p className="font-medium">혈압 (mmHg)</p>
                 <div className="flex gap-4">
                     <FormField
                     control={form.control}
                     name="bloodPressureSystolic"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                        <FormLabel>Systolic</FormLabel>
+                        <FormLabel>수축기</FormLabel>
                         <FormControl>
-                            <Input type="number" placeholder="e.g. 120" {...field} />
+                            <Input type="number" placeholder="예: 120" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -83,9 +83,9 @@ export function HealthLogForm() {
                     name="bloodPressureDiastolic"
                     render={({ field }) => (
                         <FormItem className="flex-1">
-                        <FormLabel>Diastolic</FormLabel>
+                        <FormLabel>이완기</FormLabel>
                         <FormControl>
-                            <Input type="number" placeholder="e.g. 80" {...field} />
+                            <Input type="number" placeholder="예: 80" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -99,9 +99,9 @@ export function HealthLogForm() {
               name="bloodSugar"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Blood Sugar (mg/dL)</FormLabel>
+                  <FormLabel>혈당 (mg/dL)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g. 100" {...field} />
+                    <Input type="number" placeholder="예: 100" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,7 +110,7 @@ export function HealthLogForm() {
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
-              Save Record
+              기록 저장
             </Button>
           </form>
         </Form>

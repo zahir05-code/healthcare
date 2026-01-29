@@ -21,8 +21,8 @@ export function SosDialog({ children }: { children: React.ReactNode }) {
 
   const handleCall = (name: string, phone: string) => {
     toast({
-      title: `Calling ${name}`,
-      description: `Dialing ${phone}`,
+      title: `${name}에게 전화하는 중`,
+      description: `전화번호: ${phone}`,
     });
     // On a real device, this would initiate a call
     // window.location.href = `tel:${phone}`;
@@ -36,10 +36,10 @@ export function SosDialog({ children }: { children: React.ReactNode }) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl text-red-600">
             <Siren className="h-6 w-6" />
-            SOS - Emergency
+            SOS - 긴급 상황
           </DialogTitle>
           <DialogDescription>
-            Press the button below to call emergency services immediately.
+            아래 버튼을 눌러 즉시 긴급 서비스에 전화하세요.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-4">
@@ -47,17 +47,17 @@ export function SosDialog({ children }: { children: React.ReactNode }) {
             <Button
               variant="destructive"
               className="w-full h-20 text-2xl font-bold flex items-center gap-4"
-              onClick={() => handleCall('Emergency Services (119)', '119')}
+              onClick={() => handleCall('긴급 서비스 (119)', '119')}
             >
               <Phone className="h-8 w-8" />
-              CALL 119
+              119에 전화하기
             </Button>
           </DialogClose>
           
           <Separator />
 
           <p className="text-sm text-muted-foreground text-center">
-            Or, contact a family member or other services:
+            또는 가족이나 다른 서비스에 연락하세요:
           </p>
 
           {emergencyContacts.map((contact) => (

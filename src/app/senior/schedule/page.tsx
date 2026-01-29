@@ -8,7 +8,7 @@ export default function SchedulePage() {
     <div className="flex flex-col min-h-screen">
       <Header backHref="/senior" />
       <main className="flex-1 flex flex-col p-4 md:p-6">
-        <h1 className="text-3xl font-bold mb-6 text-center">Today's Schedule</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">오늘의 일정</h1>
         <Suspense fallback={<ScheduleSkeleton />}>
           <ScheduleView />
         </Suspense>

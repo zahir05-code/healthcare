@@ -5,7 +5,7 @@ const now = new Date();
 
 export const seniorUser: User = {
   id: 'senior1',
-  name: 'John Doe',
+  name: '홍길동',
   role: 'senior',
   avatarUrl: 'https://picsum.photos/seed/user-avatar/200/200',
   guardianIds: ['guardian1'],
@@ -13,17 +13,17 @@ export const seniorUser: User = {
 
 export const guardianUser: User = {
   id: 'guardian1',
-  name: 'Jane Doe',
+  name: '홍진경',
   role: 'guardian',
   avatarUrl: 'https://picsum.photos/seed/guardian-avatar/200/200',
   seniorId: 'senior1',
 };
 
 export const emergencyContacts: Contact[] = [
-  { id: 'contact1', name: 'Jane Doe', phone: '111-222-3333', relationship: 'Daughter' },
-  { id: 'contact2', name: 'Dr. Smith', phone: '444-555-6666', relationship: 'Doctor' },
-  { id: 'contact3', name: 'Neighbor Joe', phone: '777-888-9999', relationship: 'Neighbor' },
-  { id: 'contact5', name: 'Community Center', phone: '000-111-2222', relationship: 'Service' },
+  { id: 'contact1', name: '홍진경', phone: '111-222-3333', relationship: '딸' },
+  { id: 'contact2', name: '김 의사', phone: '444-555-6666', relationship: '담당 의사' },
+  { id: 'contact3', name: '이웃집 김씨', phone: '777-888-9999', relationship: '이웃' },
+  { id: 'contact5', name: '주민 센터', phone: '000-111-2222', relationship: '서비스' },
 ];
 
 export const checkLogs: CheckLog[] = [
@@ -40,7 +40,7 @@ export const checkLogs: CheckLog[] = [
     timestamp: subDays(now, 1),
     activityType: 'call',
     status: 'completed',
-    notes: 'Called Jane Doe',
+    notes: '홍진경에게 전화함',
   },
   {
     id: 'log3',
@@ -62,7 +62,7 @@ export const checkLogs: CheckLog[] = [
     timestamp: subDays(now, 3),
     activityType: 'sos',
     status: 'completed',
-    notes: 'SOS alert triggered'
+    notes: 'SOS 알림 발생'
   },
 ];
 
@@ -105,32 +105,32 @@ export const schedules: Schedule[] = [
   {
     id: 'sched1',
     seniorId: 'senior1',
-    title: 'Morning Medication',
-    description: 'Take 1 pill of Atorvastatin',
+    title: '아침 약 복용',
+    description: '아토르바스타틴 1정 복용',
     startTime: new Date(now.setHours(8, 0, 0, 0)),
     type: 'medication',
   },
   {
     id: 'sched2',
     seniorId: 'senior1',
-    title: "Doctor's Appointment",
-    description: 'Check-up with Dr. Smith',
+    title: '병원 진료',
+    description: '김 의사 선생님과 검진',
     startTime: new Date(now.setHours(14, 0, 0, 0)),
     type: 'appointment',
   },
   {
     id: 'sched3',
     seniorId: 'senior1',
-    title: 'Evening Medication',
-    description: 'Take 1 pill of Lisinopril',
+    title: '저녁 약 복용',
+    description: '리시노프릴 1정 복용',
     startTime: new Date(now.setHours(20, 0, 0, 0)),
     type: 'medication',
   },
   {
     id: 'sched4',
     seniorId: 'senior1',
-    title: 'Call Jane',
-    description: 'Weekly catch-up call',
+    title: '진경에게 전화',
+    description: '주간 안부 전화',
     startTime: addHours(now, 2),
     type: 'other',
   },
@@ -141,7 +141,7 @@ export const weeklyReport: WeeklyReport = {
   seniorId: 'senior1',
   weekOf: startOfWeek(now),
   summary:
-    'John had a good week with consistent medication adherence. Activity levels were normal. One SOS alert was triggered but resolved quickly. It is recommended to monitor for any follow-up issues.',
+    '홍길동님은 꾸준한 복약 준수율을 보이며 좋은 한 주를 보냈습니다. 활동 수준은 보통이었습니다. 한 건의 SOS 알림이 있었지만 신속하게 해결되었습니다. 후속 문제에 대한 모니터링이 권장됩니다.',
   medicationAdherence: 85,
   activityLevel: 'medium',
   sosRequests: 1,

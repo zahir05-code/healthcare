@@ -43,3 +43,10 @@ export interface WeeklyReport {
   activityLevel: 'low' | 'medium' | 'high';
   sosRequests: number;
 }
+
+export interface Contact {
+  id: string;
+  name: string;
+  phone: string;
+  relationship: string;
+}

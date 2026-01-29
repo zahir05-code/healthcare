@@ -1,4 +1,4 @@
-import type { User, CheckLog, Schedule, WeeklyReport, HealthLog } from './types';
+import type { User, CheckLog, Schedule, WeeklyReport, HealthLog, Contact } from './types';
 import { subDays, addHours, startOfWeek, subHours } from 'date-fns';
 
 const now = new Date();
@@ -18,6 +18,14 @@ export const guardianUser: User = {
   avatarUrl: 'https://picsum.photos/seed/guardian-avatar/200/200',
   seniorId: 'senior1',
 };
+
+export const emergencyContacts: Contact[] = [
+  { id: 'contact1', name: 'Jane Doe', phone: '111-222-3333', relationship: 'Daughter' },
+  { id: 'contact2', name: 'Dr. Smith', phone: '444-555-6666', relationship: 'Doctor' },
+  { id: 'contact3', name: 'Neighbor Joe', phone: '777-888-9999', relationship: 'Neighbor' },
+  { id: 'contact4', name: 'Emergency Services', phone: '911', relationship: 'Official' },
+  { id: 'contact5', name: 'Community Center', phone: '000-111-2222', relationship: 'Service' },
+];
 
 export const checkLogs: CheckLog[] = [
   {

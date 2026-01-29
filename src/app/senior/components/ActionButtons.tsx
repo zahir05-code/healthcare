@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus } from 'lucide-react';
+import { CallDialog } from './CallDialog';
 
 export function ActionButtons() {
   const { toast } = useToast();
@@ -22,7 +23,7 @@ export function ActionButtons() {
       label: 'Call',
       icon: Phone,
       color: 'bg-green-500 hover:bg-green-600',
-      action: () => handleAction('Call', 'A call has been initiated.'),
+      isDialog: true,
     },
     {
       label: 'Medication',
@@ -76,6 +77,19 @@ export function ActionButtons() {
         );
 
         const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+
+        if (item.isDialog) {
+          return (
+            <CallDialog key={item.label}>
+              <Button
+                className={buttonClasses}
+                aria-label={item.label}
+              >
+                {content}
+              </Button>
+            </CallDialog>
+          );
+        }
 
         if (item.isLink) {
           return (

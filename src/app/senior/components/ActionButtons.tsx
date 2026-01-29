@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages } from 'lucide-react';
 
 export function ActionButtons() {
   const { toast } = useToast();
@@ -38,6 +38,13 @@ export function ActionButtons() {
       href: '/senior/schedule',
     },
     {
+      label: 'Translate',
+      icon: Languages,
+      color: 'bg-orange-500 hover:bg-orange-600',
+      isLink: true,
+      href: '/senior/translate',
+    },
+    {
       label: 'SOS',
       icon: Siren,
       color: 'bg-red-600 hover:bg-red-700',
@@ -46,11 +53,12 @@ export function ActionButtons() {
           'SOS',
           'SOS alert sent to guardians. Please wait for assistance.'
         ),
+      className: 'col-span-2',
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl mx-auto aspect-square">
+    <div className="grid grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl mx-auto">
       {actions.map((item) => {
         const content = (
           <div className="flex flex-col items-center justify-center gap-4">
@@ -61,11 +69,13 @@ export function ActionButtons() {
           </div>
         );
 
+        const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+
         if (item.isLink) {
           return (
-            <Link href={item.href || ''} key={item.label} passHref>
+            <Link href={item.href || ''} key={item.label} passHref className={item.className}>
               <Button
-                className={`w-full h-full rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`}
+                className={buttonClasses}
                 aria-label={item.label}
               >
                 {content}
@@ -77,7 +87,7 @@ export function ActionButtons() {
         return (
           <Button
             key={item.label}
-            className={`w-full h-full rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`}
+            className={`${buttonClasses} ${item.className || ''}`}
             onClick={item.action}
             aria-label={item.label}
           >

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus } from 'lucide-react';
 import { CallDialog } from './CallDialog';
+import { SosDialog } from './SosDialog';
 
 export function ActionButtons() {
   const { toast } = useToast();
@@ -56,11 +57,6 @@ export function ActionButtons() {
       label: 'SOS',
       icon: Siren,
       color: 'bg-red-600 hover:bg-red-700',
-      action: () =>
-        handleAction(
-          'SOS',
-          'SOS alert sent to guardians. Please wait for assistance.'
-        ),
     },
   ];
 
@@ -77,6 +73,19 @@ export function ActionButtons() {
         );
 
         const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+
+        if (item.label === 'SOS') {
+            return (
+                <SosDialog key={item.label}>
+                    <Button
+                        className={buttonClasses}
+                        aria-label={item.label}
+                    >
+                        {content}
+                    </Button>
+                </SosDialog>
+            );
+        }
 
         if (item.isDialog) {
           return (

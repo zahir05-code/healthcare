@@ -1,5 +1,5 @@
-import type { User, CheckLog, Schedule, WeeklyReport } from './types';
-import { subDays, addHours, startOfWeek } from 'date-fns';
+import type { User, CheckLog, Schedule, WeeklyReport, HealthLog } from './types';
+import { subDays, addHours, startOfWeek, subHours } from 'date-fns';
 
 const now = new Date();
 
@@ -57,6 +57,41 @@ export const checkLogs: CheckLog[] = [
     status: 'completed',
     notes: 'SOS alert triggered'
   },
+];
+
+export const healthLogs: HealthLog[] = [
+    {
+        id: 'hlog1',
+        seniorId: 'senior1',
+        timestamp: subHours(now, 8),
+        bloodPressureSystolic: 122,
+        bloodPressureDiastolic: 81,
+        bloodSugar: 95,
+    },
+    {
+        id: 'hlog2',
+        seniorId: 'senior1',
+        timestamp: subDays(now, 1),
+        bloodPressureSystolic: 125,
+        bloodPressureDiastolic: 83,
+        bloodSugar: 105,
+    },
+    {
+        id: 'hlog3',
+        seniorId: 'senior1',
+        timestamp: subDays(now, 2),
+        bloodPressureSystolic: 119,
+        bloodPressureDiastolic: 78,
+        bloodSugar: 92,
+    },
+    {
+        id: 'hlog4',
+        seniorId: 'senior1',
+        timestamp: subDays(now, 3),
+        bloodPressureSystolic: 130,
+        bloodPressureDiastolic: 85,
+        bloodSugar: 110,
+    }
 ];
 
 export const schedules: Schedule[] = [

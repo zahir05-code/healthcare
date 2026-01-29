@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren, Languages } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus } from 'lucide-react';
 
 export function ActionButtons() {
   const { toast } = useToast();
@@ -45,6 +45,13 @@ export function ActionButtons() {
       href: '/senior/translate',
     },
     {
+      label: 'Health Log',
+      icon: ClipboardPlus,
+      color: 'bg-teal-500 hover:bg-teal-600',
+      isLink: true,
+      href: '/senior/health',
+    },
+    {
       label: 'SOS',
       icon: Siren,
       color: 'bg-red-600 hover:bg-red-700',
@@ -53,7 +60,6 @@ export function ActionButtons() {
           'SOS',
           'SOS alert sent to guardians. Please wait for assistance.'
         ),
-      className: 'col-span-2',
     },
   ];
 

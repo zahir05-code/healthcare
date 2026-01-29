@@ -16,6 +16,15 @@ export interface CheckLog {
   notes?: string;
 }
 
+export interface HealthLog {
+  id: string;
+  seniorId: string;
+  timestamp: Date;
+  bloodPressureSystolic: number;
+  bloodPressureDiastolic: number;
+  bloodSugar: number;
+}
+
 export interface Schedule {
   id: string;
   seniorId: string;

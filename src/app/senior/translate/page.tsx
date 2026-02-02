@@ -5,7 +5,7 @@ import {Header} from '@/components/Header';
 import {Button} from '@/components/ui/button';
 import {Textarea} from '@/components/ui/textarea';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {translate} from '@/ai/flows/translate-flow';
+import {translateToKorean, translateToEnglish} from '@/ai/flows/translate-flow';
 import {Loader} from 'lucide-react';
 
 export default function TranslatePage() {
@@ -20,7 +20,10 @@ export default function TranslatePage() {
     setTargetLang(targetLanguage);
     setTranslatedText('');
     try {
-      const result = await translate({text: inputText, targetLanguage});
+      const result =
+        targetLanguage === 'Korean'
+          ? await translateToKorean({text: inputText})
+          : await translateToEnglish({text: inputText});
       setTranslatedText(result.translation);
     } catch (error) {
       console.error('Translation failed:', error);

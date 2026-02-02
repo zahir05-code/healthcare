@@ -2,32 +2,28 @@
 /**
  * @fileOverview A flow for translating text between Korean and English.
  *
- * - translate - A function that handles the translation process.
- * - TranslateInput - The input type for the translate function.
- * - TranslateOutput - The return type for the translate function.
+ * - translateToKorean - A function that translates text to Korean.
+ * - translateToEnglish - A function that translates text to English.
+ * - TranslateOutput - The return type for the translation functions.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const TranslateInputSchema = z.object({
+const TranslateFlowInputSchema = z.object({
   text: z.string().describe('The text to translate.'),
   targetLanguage: z.enum(['Korean', 'English']).describe('The language to translate the text into.'),
 });
-export type TranslateInput = z.infer<typeof TranslateInputSchema>;
 
 const TranslateOutputSchema = z.object({
   translation: z.string().describe('The translated text.'),
 });
 export type TranslateOutput = z.infer<typeof TranslateOutputSchema>;
 
-export async function translate(input: TranslateInput): Promise<TranslateOutput> {
-  return translateFlow(input);
-}
 
 const prompt = ai.definePrompt({
   name: 'translatePrompt',
-  input: {schema: TranslateInputSchema},
+  input: {schema: TranslateFlowInputSchema},
   output: {schema: TranslateOutputSchema},
   prompt: `You are an expert translator. Your task is to translate the given text into {{targetLanguage}}.
 
@@ -39,7 +35,7 @@ Input text: {{{text}}}`,
 const translateFlow = ai.defineFlow(
   {
     name: 'translateFlow',
-    inputSchema: TranslateInputSchema,
+    inputSchema: TranslateFlowInputSchema,
     outputSchema: TranslateOutputSchema,
   },
   async input => {
@@ -50,3 +46,11 @@ const translateFlow = ai.defineFlow(
     return output;
   }
 );
+
+export async function translateToKorean(input: { text: string }): Promise<TranslateOutput> {
+  return translateFlow({ ...input, targetLanguage: 'Korean' });
+}
+
+export async function translateToEnglish(input: { text: string }): Promise<TranslateOutput> {
+  return translateFlow({ ...input, targetLanguage: 'English' });
+}

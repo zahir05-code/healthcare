@@ -1,12 +1,17 @@
+'use client';
+
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/auth-context';
 
 type HeaderProps = {
   backHref?: string;
 };
 
 export function Header({ backHref }: HeaderProps) {
+  const { isLoggedIn, login, logout } = useAuth();
+
   return (
     <header className="sticky top-0 z-10 w-full bg-background/80 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto flex h-16 items-center px-4 md:px-6">
@@ -36,6 +41,19 @@ export function Header({ backHref }: HeaderProps) {
           </svg>
           <span className="text-xl font-bold text-foreground">케어커넥트</span>
         </Link>
+        <div className="ml-auto flex items-center gap-4">
+          {isLoggedIn ? (
+            <Button variant="outline" onClick={logout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              로그아웃
+            </Button>
+          ) : (
+             <Button onClick={login}>
+              <LogIn className="mr-2 h-4 w-4" />
+              로그인
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   );

@@ -75,7 +75,7 @@ export function ActionButtons() {
 
         const content = (
           <div className="flex flex-col items-center justify-center gap-4">
-            <item.icon className="h-16 w-16 sm:h-20 sm:w-20 text-white" />
+            <item.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
             <span className="text-2xl sm:text-3xl font-bold text-white">
               {item.label}
             </span>

@@ -70,6 +70,22 @@ export function ActionButtons() {
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
+      <div className="w-full">
+        <SosDialog>
+            <Button
+                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
+                aria-label={emergencyAction.label}
+            >
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24" />
+                    <span className="text-2xl sm:text-3xl font-bold">
+                        {emergencyAction.label}
+                    </span>
+                </div>
+            </Button>
+        </SosDialog>
+      </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full">
         {actions.map((item) => {
           const content = (
@@ -125,22 +141,6 @@ export function ActionButtons() {
             </div>
           );
         })}
-      </div>
-      
-      <div className="w-full">
-        <SosDialog>
-            <Button
-                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
-                aria-label={emergencyAction.label}
-            >
-                <div className="flex flex-col items-center justify-center gap-4">
-                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24" />
-                    <span className="text-2xl sm:text-3xl font-bold">
-                        {emergencyAction.label}
-                    </span>
-                </div>
-            </Button>
-        </SosDialog>
       </div>
     </div>
   );

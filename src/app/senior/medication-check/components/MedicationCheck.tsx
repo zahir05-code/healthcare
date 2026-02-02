@@ -145,7 +145,6 @@ export function MedicationCheck() {
           
           {/* --- 버튼 --- */}
           <div className="flex gap-4">
-            {/* 카메라가 라이브일 때만 캡처 버튼 표시 */}
             {!capturedImage && !analysisResult && !isLoading &&(
               <Button onClick={handleCapture} className="w-full" disabled={!hasCameraPermission}>
                 <Camera className="mr-2" />
@@ -153,8 +152,7 @@ export function MedicationCheck() {
               </Button>
             )}
 
-            {/* 분석 완료 후 재촬영 버튼 표시 */}
-            {analysisResult && !isLoading &&(
+            {(analysisResult || capturedImage) && !isLoading &&(
               <Button onClick={handleRetake} variant="outline" className="w-full">
                 <RefreshCcw className="mr-2" />
                 새로운 약 촬영하기
@@ -164,34 +162,49 @@ export function MedicationCheck() {
           
           {/* --- 분석 결과 --- */}
           {analysisResult && !isLoading && (
-            <div className="space-y-4 pt-4">
-              <Alert variant={analysisResult.isPill ? 'default' : 'destructive'}>
-                <Sparkles className="h-4 w-4" />
-                <AlertTitle>분석 결과</AlertTitle>
-                <AlertDescription>
-                  {analysisResult.isPill
-                    ? `AI가 이 약을 '${analysisResult.pillName}' (으)로 식별했습니다.`
-                    : '사진에서 약을 찾을 수 없습니다. 다시 시도해주세요.'}
-                </AlertDescription>
-              </Alert>
-
-              {analysisResult.isPill && (
-                <div className="rounded-lg border p-4">
-                  <h3 className="font-semibold mb-2">{analysisResult.pillName}의 주요 성분</h3>
-                  {analysisResult.ingredients.length > 0 ? (
-                    <ul className="list-disc space-y-1 pl-5 text-sm">
-                      {analysisResult.ingredients.map((ingredient, index) => (
-                        <li key={index}>{ingredient}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">주요 성분 정보를 찾을 수 없습니다.</p>
-                  )}
-                  <p className="mt-4 text-xs text-muted-foreground">
-                    * 이 정보는 참고용이며, 정확한 복약 정보는 의사 또는 약사와 상담하세요.
+            <div className="space-y-4 pt-4 border-t">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-6 w-6 text-primary" />
+                <h2 className="text-xl font-bold">분석 결과</h2>
+              </div>
+              {analysisResult.isPill ? (
+                <div className="space-y-4">
+                  <p className="text-lg">
+                    AI가 이 약을{' '}
+                    <strong className="text-accent">{analysisResult.pillName}</strong>{' '}
+                    (으)로 식별했습니다.
                   </p>
+                  <div className="rounded-lg border p-4">
+                    <h3 className="font-semibold mb-2">
+                      {analysisResult.pillName}의 주요 성분
+                    </h3>
+                    {analysisResult.ingredients.length > 0 ? (
+                      <ul className="list-disc space-y-1 pl-5 text-sm">
+                        {analysisResult.ingredients.map((ingredient, index) => (
+                          <li key={index}>{ingredient}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">
+                        주요 성분 정보를 찾을 수 없습니다.
+                      </p>
+                    )}
+                  </div>
                 </div>
+              ) : (
+                <Alert variant="destructive">
+                  <XCircle className="h-4 w-4" />
+                  <AlertTitle>분석 실패</AlertTitle>
+                  <AlertDescription>
+                    사진에서 약을 찾을 수 없습니다. 더 밝은 곳에서 약이 선명하게
+                    보이도록 다시 촬영해주세요.
+                  </AlertDescription>
+                </Alert>
               )}
+              <p className="text-xs text-muted-foreground pt-2">
+                * 이 정보는 참고용이며, 정확한 복약 정보는 의사 또는 약사와
+                상담하세요.
+              </p>
             </div>
           )}
         </div>

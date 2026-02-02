@@ -20,27 +20,19 @@ export function MedicationCheck() {
   const [isLoading, setIsLoading] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  // 이 효과는 카메라 권한을 얻는 것을 처리합니다.
-  // 컴포넌트가 마운트될 때와 사용자가 사진을 다시 찍을 때 실행됩니다.
   useEffect(() => {
     const getCameraPermission = async () => {
-      // 이미 권한이 있다면 다시 요청하지 않습니다.
       if (hasCameraPermission) return;
       try {
-        // 사용자의 카메라에 접근을 요청합니다.
-        // 'facingMode: "environment"'는 모바일 기기에서 후면 카메라를 사용하려고 시도합니다.
         const mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
         setStream(mediaStream);
         setHasCameraPermission(true);
-        // 비디오 요소가 준비되면 카메라 스트림을 연결합니다.
         if (videoRef.current) {
           videoRef.current.srcObject = mediaStream;
         }
       } catch (error) {
-        // 사용자가 권한을 거부하면 이 오류가 발생합니다.
         console.error('Error accessing camera:', error);
         setHasCameraPermission(false);
-        // 카메라 접근이 필요하다는 설명 메시지를 표시합니다.
         toast({
           variant: 'destructive',
           title: '카메라 접근 거부됨',
@@ -49,13 +41,10 @@ export function MedicationCheck() {
       }
     };
 
-    // 아직 캡처된 이미지가 없을 때만 권한을 얻으려고 시도합니다.
     if(!capturedImage) {
         getCameraPermission();
     }
 
-    // 정리 함수: 이 함수는 컴포넌트가 언마운트될 때 실행됩니다.
-    // 배터리를 절약하기 위해 카메라 스트림을 중지합니다.
     return () => {
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
@@ -63,7 +52,6 @@ export function MedicationCheck() {
     };
   }, [hasCameraPermission, toast, stream, capturedImage]);
 
-  // 이 함수는 이미지를 분석하기 위해 호출됩니다.
   const handleAnalyze = async (imageUri: string) => {
     if (!imageUri) return;
 
@@ -71,7 +59,6 @@ export function MedicationCheck() {
     setAnalysisResult(null);
 
     try {
-      // 캡처된 이미지 데이터로 AI 플로우를 호출합니다.
       const result = await analyzePill({ photoDataUri: imageUri });
       setAnalysisResult(result);
     } catch (error) {
@@ -81,7 +68,6 @@ export function MedicationCheck() {
         title: '분석 오류',
         description: '약 성분을 분석하는 데 실패했습니다. 다시 시도해주세요.',
       });
-      // 재시도를 허용하기 위해 오류 발생 시 상태를 초기화합니다.
       setCapturedImage(null);
       setAnalysisResult(null);
       setHasCameraPermission(null); 
@@ -98,18 +84,14 @@ export function MedicationCheck() {
       canvas.height = video.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
-        // 현재 비디오 프레임을 숨겨진 캔버스에 그립니다.
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-        // 캔버스에서 이미지 데이터를 JPEG로 가져옵니다.
         const dataUri = canvas.toDataURL('image/jpeg');
         setCapturedImage(dataUri);
         
-        // 카메라 스트림을 중지합니다.
         if (stream) {
           stream.getTracks().forEach(track => track.stop());
         }
-
-        // *** 신규: 캡처 후 즉시 분석을 시작합니다. ***
+        
         handleAnalyze(dataUri);
       }
     }
@@ -118,7 +100,6 @@ export function MedicationCheck() {
   const handleRetake = () => {
     setCapturedImage(null);
     setAnalysisResult(null);
-    // 권한을 null로 설정하면 useEffect가 다시 권한을 요청하도록 합니다.
     setHasCameraPermission(null);
   };
 
@@ -133,7 +114,6 @@ export function MedicationCheck() {
       <CardContent>
         <div className="space-y-4">
           <div className="relative aspect-video w-full overflow-hidden rounded-md border bg-muted">
-            {/* 사례 1: 카메라 권한 거부됨 */}
             {hasCameraPermission === false && (
               <div className="flex flex-col items-center justify-center h-full text-center p-4">
                  <XCircle className="h-12 w-12 text-destructive mb-2" />
@@ -144,17 +124,14 @@ export function MedicationCheck() {
               </div>
             )}
             
-            {/* 사례 2: 실시간 카메라 피드 표시 */}
             {hasCameraPermission && !capturedImage && !isLoading &&(
               <video ref={videoRef} className="h-full w-full object-cover" autoPlay playsInline muted />
             )}
 
-            {/* 사례 3: 캡처된 이미지 표시 */}
             {capturedImage && !isLoading && (
               <img src={capturedImage} alt="캡처된 약 사진" className="h-full w-full object-contain" />
             )}
 
-            {/* 사례 4: 로딩 상태 (카메라 또는 분석용) */}
             {(hasCameraPermission === null || isLoading) && (
                  <div className="flex flex-col items-center justify-center h-full">
                     <Loader className="h-8 w-8 animate-spin text-muted-foreground" />

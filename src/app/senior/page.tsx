@@ -1,5 +1,6 @@
 import { Header } from '@/components/Header';
 import { ActionButtons } from './components/ActionButtons';
+import { Chatbot } from './components/Chatbot';
 
 export default function SeniorPage() {
   return (
@@ -8,6 +9,7 @@ export default function SeniorPage() {
       <main className="flex-1 flex flex-col items-center justify-center p-4">
         <ActionButtons />
       </main>
+      <Chatbot />
     </div>
   );
 }

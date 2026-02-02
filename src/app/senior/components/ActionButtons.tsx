@@ -60,90 +60,88 @@ export function ActionButtons() {
       isLink: true,
       href: '/senior/medication-check',
     },
-    {
-      label: '긴급 호출',
-      icon: Siren,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.red.600)_50%,theme(colors.red.800)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.red.700)_50%,theme(colors.red.900)_50%)]",
-    },
   ];
 
+  const emergencyAction = {
+    label: '긴급 호출',
+    icon: Siren,
+    color: "bg-[linear-gradient(to_bottom,theme(colors.red.600)_50%,theme(colors.red.800)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.red.700)_50%,theme(colors.red.900)_50%)]",
+  };
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
-      {actions.map((item, index) => {
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full">
+        {actions.map((item) => {
+          const content = (
+            <div className="flex flex-col items-center justify-center gap-4">
+              <item.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
+              <span className="text-2xl sm:text-3xl font-bold text-white">
+                {item.label}
+              </span>
+            </div>
+          );
 
-        const isFullSpan = actions.length % 2 !== 0 && index === actions.length - 1 && actions.length > 4;
-
-        const content = (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <item.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
-            <span className="text-2xl sm:text-3xl font-bold text-white">
-              {item.label}
-            </span>
-          </div>
-        );
-
-        const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
-        
-        const wrapperClasses = isFullSpan ? 'sm:col-span-3' : '';
-
-
-        if (item.label === '긴급 호출') {
+          const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+          
+          if (item.isDialog) {
             return (
-                <div key={item.label} className={wrapperClasses}>
-                    <SosDialog>
-                        <Button
-                            className={buttonClasses}
-                            aria-label={item.label}
-                        >
-                            {content}
-                        </Button>
-                    </SosDialog>
-                </div>
+              <div key={item.label}>
+                <CallDialog>
+                  <Button
+                    className={buttonClasses}
+                    aria-label={item.label}
+                  >
+                    {content}
+                  </Button>
+                </CallDialog>
+              </div>
             );
-        }
+          }
 
-        if (item.isDialog) {
+          if (item.isLink) {
+            return (
+              <div key={item.label}>
+                <Link href={item.href || ''} passHref>
+                  <Button
+                    className={buttonClasses}
+                    aria-label={item.label}
+                  >
+                    {content}
+                  </Button>
+                </Link>
+              </div>
+            );
+          }
+
           return (
-            <div key={item.label} className={wrapperClasses}>
-              <CallDialog>
-                <Button
-                  className={buttonClasses}
-                  aria-label={item.label}
-                >
-                  {content}
-                </Button>
-              </CallDialog>
+            <div key={item.label}>
+              <Button
+                className={buttonClasses}
+                onClick={item.action}
+                aria-label={item.label}
+              >
+                {content}
+              </Button>
             </div>
           );
-        }
-
-        if (item.isLink) {
-          return (
-            <div key={item.label} className={wrapperClasses}>
-              <Link href={item.href || ''} passHref>
-                <Button
-                  className={buttonClasses}
-                  aria-label={item.label}
-                >
-                  {content}
-                </Button>
-              </Link>
-            </div>
-          );
-        }
-
-        return (
-          <div key={item.label} className={wrapperClasses}>
+        })}
+      </div>
+      
+      <div className="w-full">
+        <SosDialog>
             <Button
-              className={`${buttonClasses} ${item.className || ''}`}
-              onClick={item.action}
-              aria-label={item.label}
+                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.color}`}
+                aria-label={emergencyAction.label}
             >
-              {content}
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
+                    <span className="text-2xl sm:text-3xl font-bold text-white">
+                        {emergencyAction.label}
+                    </span>
+                </div>
             </Button>
-          </div>
-        );
-      })}
+        </SosDialog>
+      </div>
     </div>
   );
 }

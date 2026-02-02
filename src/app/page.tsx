@@ -12,8 +12,12 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-8">
       <div className="text-center mb-12">
-        <h1 className="font-headline text-5xl font-bold text-gray-800 dark:text-gray-200">
-          케어커넥트
+        <h1 className="font-headline text-5xl font-bold">
+          <span className="text-chart-1">케</span>
+          <span className="text-chart-5">어</span>
+          <span className="text-chart-4">커</span>
+          <span className="text-chart-2">넥</span>
+          <span className="text-chart-3">트</span>
         </h1>
         <p className="text-muted-foreground mt-4 text-lg">
           어르신을 위한 든든한 디지털 도우미입니다.

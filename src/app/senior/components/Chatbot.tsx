@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter, SheetDescription } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Loader, MessageCircle, Send, Sparkles } from 'lucide-react';
+import { Loader, Bot, Send, Sparkles } from 'lucide-react';
 import { chat } from '@/ai/flows/chat-flow';
 
 type Message = {
@@ -61,7 +61,7 @@ export function Chatbot() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
                 <Button className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-20" size="icon">
-                    <MessageCircle className="h-8 w-8" />
+                    <Bot className="h-8 w-8" />
                     <span className="sr-only">챗봇 열기</span>
                 </Button>
             </SheetTrigger>

@@ -7,7 +7,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-8">
       <div className="text-center mb-12">
         <h1 className="font-headline text-5xl font-bold text-gray-800 dark:text-gray-200">
-          케어커넥트에 오신 것을 환영합니다
+          케어커넥트
         </h1>
         <p className="text-muted-foreground mt-4 text-lg">
           어르신을 위한 든든한 디지털 도우미입니다.

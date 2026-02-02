@@ -143,6 +143,15 @@ export const weeklyReport: WeeklyReport = {
   summary:
     '홍길동님은 꾸준한 복약 준수율을 보이며 좋은 한 주를 보냈습니다. 활동 수준은 보통이었습니다. 한 건의 SOS 알림이 있었지만 신속하게 해결되었습니다. 후속 문제에 대한 모니터링이 권장됩니다.',
   medicationAdherence: 85,
+  dailyAdherence: [
+    { day: '일', adherence: 100 },
+    { day: '월', adherence: 50 },
+    { day: '화', adherence: 100 },
+    { day: '수', adherence: 100 },
+    { day: '목', adherence: 50 },
+    { day: '금', adherence: 100 },
+    { day: '토', adherence: 100 },
+  ],
   activityLevel: 'medium',
   sosRequests: 1,
 };

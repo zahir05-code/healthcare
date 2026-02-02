@@ -7,13 +7,11 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle } from 'lucide-react';
 
-const chartData = [
-  {
-    name: '이번 주',
-    adherence: reportData.medicationAdherence,
-    goal: 100,
-  },
-];
+const chartData = reportData.dailyAdherence.map(d => ({
+  name: d.day,
+  adherence: d.adherence,
+  goal: 100,
+}));
 
 const chartConfig = {
   adherence: {
@@ -52,7 +50,7 @@ export function WeeklyReport() {
         </div>
         
         <div>
-          <h3 className="text-md font-semibold mb-2 text-center">복약 준수율</h3>
+          <h3 className="text-md font-semibold mb-2 text-center">주간 복약 준수율</h3>
           <div className="w-full h-48">
             <ChartContainer config={chartConfig} className="h-full w-full">
               <BarChart accessibilityLayer data={chartData} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
@@ -62,8 +60,8 @@ export function WeeklyReport() {
                   cursor={false}
                   content={<ChartTooltipContent indicator="dot" />}
                 />
-                <Bar dataKey="goal" fill="var(--color-goal)" radius={4} barSize={40} />
-                <Bar dataKey="adherence" fill="var(--color-adherence)" radius={4} barSize={40} />
+                <Bar dataKey="goal" fill="var(--color-goal)" radius={4} barSize={20} />
+                <Bar dataKey="adherence" fill="var(--color-adherence)" radius={4} barSize={20} />
               </BarChart>
             </ChartContainer>
           </div>

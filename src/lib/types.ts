@@ -40,6 +40,7 @@ export interface WeeklyReport {
   weekOf: Date;
   summary: string;
   medicationAdherence: number;
+  dailyAdherence: { day: string; adherence: number }[];
   activityLevel: 'low' | 'medium' | 'high';
   sosRequests: number;
 }

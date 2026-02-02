@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { ArrowLeft, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/auth-context';
+import { LoginDialog } from './LoginDialog';
 
 type HeaderProps = {
   backHref?: string;
 };
 
 export function Header({ backHref }: HeaderProps) {
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-10 w-full bg-background/80 backdrop-blur-sm shadow-sm">
@@ -28,7 +29,7 @@ export function Header({ backHref }: HeaderProps) {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            viewBox="0 0 24 24"
+            viewBox="0 0 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -48,10 +49,12 @@ export function Header({ backHref }: HeaderProps) {
               로그아웃
             </Button>
           ) : (
-             <Button onClick={login}>
-              <LogIn className="mr-2 h-4 w-4" />
-              로그인
-            </Button>
+             <LoginDialog>
+                <Button>
+                  <LogIn className="mr-2 h-4 w-4" />
+                  로그인
+                </Button>
+             </LoginDialog>
           )}
         </div>
       </div>

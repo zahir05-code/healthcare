@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Users, Shield, LogIn } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
+import { LoginDialog } from '@/components/LoginDialog';
 
 export default function Home() {
-  const { isLoggedIn, login } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-8">
@@ -43,10 +44,12 @@ export default function Home() {
       ) : (
         <div className="flex flex-col items-center gap-6 text-center">
             <p className="text-xl text-muted-foreground">서비스를 이용하려면 로그인하세요.</p>
-            <Button onClick={login} size="lg">
-                <LogIn className="mr-2 h-5 w-5" />
-                로그인
-            </Button>
+            <LoginDialog>
+                <Button size="lg">
+                    <LogIn className="mr-2 h-5 w-5" />
+                    로그인
+                </Button>
+            </LoginDialog>
         </div>
       )}
     </main>

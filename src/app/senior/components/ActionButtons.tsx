@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera } from 'lucide-react';
 import { CallDialog } from './CallDialog';
 import { SosDialog } from './SosDialog';
 
@@ -54,6 +54,13 @@ export function ActionButtons() {
       href: '/senior/health',
     },
     {
+      label: '약 성분 확인',
+      icon: Camera,
+      color: 'bg-indigo-500 hover:bg-indigo-600',
+      isLink: true,
+      href: '/senior/medication-check',
+    },
+    {
       label: '긴급 호출',
       icon: Siren,
       color: 'bg-red-600 hover:bg-red-700',
@@ -61,11 +68,14 @@ export function ActionButtons() {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl mx-auto">
-      {actions.map((item) => {
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full max-w-4xl mx-auto">
+      {actions.map((item, index) => {
+
+        const isFullSpan = actions.length % 2 !== 0 && index === actions.length - 1 && actions.length > 4;
+
         const content = (
           <div className="flex flex-col items-center justify-center gap-4">
-            <item.icon className="h-16 w-16 sm:h-24 sm:w-24 text-white" />
+            <item.icon className="h-16 w-16 sm:h-20 sm:w-20 text-white" />
             <span className="text-2xl sm:text-3xl font-bold text-white">
               {item.label}
             </span>
@@ -73,55 +83,65 @@ export function ActionButtons() {
         );
 
         const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+        
+        const wrapperClasses = isFullSpan ? 'sm:col-span-3' : '';
+
 
         if (item.label === '긴급 호출') {
             return (
-                <SosDialog key={item.label}>
-                    <Button
-                        className={buttonClasses}
-                        aria-label={item.label}
-                    >
-                        {content}
-                    </Button>
-                </SosDialog>
+                <div key={item.label} className={wrapperClasses}>
+                    <SosDialog>
+                        <Button
+                            className={buttonClasses}
+                            aria-label={item.label}
+                        >
+                            {content}
+                        </Button>
+                    </SosDialog>
+                </div>
             );
         }
 
         if (item.isDialog) {
           return (
-            <CallDialog key={item.label}>
-              <Button
-                className={buttonClasses}
-                aria-label={item.label}
-              >
-                {content}
-              </Button>
-            </CallDialog>
+            <div key={item.label} className={wrapperClasses}>
+              <CallDialog>
+                <Button
+                  className={buttonClasses}
+                  aria-label={item.label}
+                >
+                  {content}
+                </Button>
+              </CallDialog>
+            </div>
           );
         }
 
         if (item.isLink) {
           return (
-            <Link href={item.href || ''} key={item.label} passHref className={item.className}>
-              <Button
-                className={buttonClasses}
-                aria-label={item.label}
-              >
-                {content}
-              </Button>
-            </Link>
+            <div key={item.label} className={wrapperClasses}>
+              <Link href={item.href || ''} passHref>
+                <Button
+                  className={buttonClasses}
+                  aria-label={item.label}
+                >
+                  {content}
+                </Button>
+              </Link>
+            </div>
           );
         }
 
         return (
-          <Button
-            key={item.label}
-            className={`${buttonClasses} ${item.className || ''}`}
-            onClick={item.action}
-            aria-label={item.label}
-          >
-            {content}
-          </Button>
+          <div key={item.label} className={wrapperClasses}>
+            <Button
+              className={`${buttonClasses} ${item.className || ''}`}
+              onClick={item.action}
+              aria-label={item.label}
+            >
+              {content}
+            </Button>
+          </div>
         );
       })}
     </div>

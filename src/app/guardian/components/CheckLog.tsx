@@ -5,12 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Pill, Phone, Siren, Calendar } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const activityIcons = {
   medication: <Pill className="h-4 w-4" />,
   call: <Phone className="h-4 w-4" />,
   schedule_view: <Calendar className="h-4 w-4" />,
-  sos: <Siren className="h-4 w-4 text-red-500" />,
+  sos: <Siren className="h-4 w-4 text-destructive" />,
 };
 
 const activityNames = {
@@ -25,12 +26,6 @@ const statusNames = {
     missed: '놓침',
     delayed: '지연',
 }
-
-const statusColors = {
-  completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  missed: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
-  delayed: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-};
 
 export function CheckLog() {
   const sortedLogs = [...checkLogs].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
@@ -62,7 +57,11 @@ export function CheckLog() {
                 <TableCell>
                   <Badge
                     variant="outline"
-                    className={`capitalize ${statusColors[log.status]}`}
+                    className={cn('capitalize border-none', {
+                      'bg-primary/20 text-primary': log.status === 'completed',
+                      'bg-destructive/20 text-destructive': log.status === 'missed',
+                      'bg-accent/20 text-accent': log.status === 'delayed',
+                    })}
                   >
                     {statusNames[log.status]}
                   </Badge>

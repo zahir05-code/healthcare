@@ -39,10 +39,10 @@ export function StatusSummary() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <CheckCircle2 className="h-8 w-8 text-green-500" />
+            <CheckCircle2 className="h-8 w-8 text-primary" />
             <div>
               <p className="text-sm text-muted-foreground">오전 약</p>
-              <Badge variant={morningMedsTaken ? 'default' : 'destructive'} className={morningMedsTaken ? 'bg-green-500' : ''}>
+              <Badge variant={morningMedsTaken ? 'default' : 'destructive'}>
                 {morningMedsTaken ? '복용 완료' : '대기 중'}
               </Badge>
             </div>
@@ -57,7 +57,7 @@ export function StatusSummary() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <AlertTriangle className={`h-8 w-8 ${sosToday ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
+            <AlertTriangle className={`h-8 w-8 ${sosToday ? 'text-destructive animate-pulse' : 'text-muted-foreground'}`} />
             <div>
               <p className="text-sm text-muted-foreground">오늘의 긴급 호출</p>
                <Badge variant={sosToday ? 'destructive' : 'secondary'}>

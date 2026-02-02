@@ -41,10 +41,10 @@ export function WeeklyReport() {
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm font-medium">긴급 호출 요청:</span>
             <div className="flex items-center gap-2">
-              <span className={`font-bold ${reportData.sosRequests > 0 ? 'text-red-500' : ''}`}>
+              <span className={`font-bold ${reportData.sosRequests > 0 ? 'text-destructive' : ''}`}>
                 {reportData.sosRequests}
               </span>
-              {reportData.sosRequests > 0 && <AlertTriangle className="h-4 w-4 text-red-500" />}
+              {reportData.sosRequests > 0 && <AlertTriangle className="h-4 w-4 text-destructive" />}
             </div>
           </div>
         </div>

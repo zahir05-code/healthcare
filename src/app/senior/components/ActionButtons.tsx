@@ -23,40 +23,40 @@ export function ActionButtons() {
     {
       label: '전화',
       icon: Phone,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.green.500)_50%,theme(colors.green.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.green.600)_50%,theme(colors.green.800)_50%)]",
+      className: "bg-primary text-primary-foreground hover:bg-primary/90",
       isDialog: true,
     },
     {
       label: '복약',
       icon: Pill,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.blue.500)_50%,theme(colors.blue.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.blue.600)_50%,theme(colors.blue.800)_50%)]",
+      className: "bg-primary text-primary-foreground hover:bg-primary/90",
       action: () => handleAction('복약', '복약 확인이 기록되었습니다.'),
     },
     {
       label: '일정 보기',
       icon: Calendar,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.purple.500)_50%,theme(colors.purple.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.purple.600)_50%,theme(colors.purple.800)_50%)]",
+      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
       href: '/senior/schedule',
     },
     {
       label: '번역',
       icon: Languages,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.orange.500)_50%,theme(colors.orange.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.orange.600)_50%,theme(colors.orange.800)_50%)]",
+      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
       href: '/senior/translate',
     },
     {
       label: '건강 기록',
       icon: ClipboardPlus,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.teal.500)_50%,theme(colors.teal.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.teal.600)_50%,theme(colors.teal.800)_50%)]",
+      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
       href: '/senior/health',
     },
     {
       label: '약 성분 확인',
       icon: Camera,
-      color: "bg-[linear-gradient(to_bottom,theme(colors.indigo.500)_50%,theme(colors.indigo.700)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.indigo.600)_50%,theme(colors.indigo.800)_50%)]",
+      className: "bg-accent text-accent-foreground hover:bg-accent/90",
       isLink: true,
       href: '/senior/medication-check',
     },
@@ -65,7 +65,7 @@ export function ActionButtons() {
   const emergencyAction = {
     label: '긴급 호출',
     icon: Siren,
-    color: "bg-[linear-gradient(to_bottom,theme(colors.red.600)_50%,theme(colors.red.800)_50%)] hover:bg-[linear-gradient(to_bottom,theme(colors.red.700)_50%,theme(colors.red.900)_50%)]",
+    className: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
   };
 
   return (
@@ -74,14 +74,14 @@ export function ActionButtons() {
         {actions.map((item) => {
           const content = (
             <div className="flex flex-col items-center justify-center gap-4">
-              <item.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
-              <span className="text-2xl sm:text-3xl font-bold text-white">
+              <item.icon className="h-20 w-20 sm:h-24 sm:w-24" />
+              <span className="text-2xl sm:text-3xl font-bold">
                 {item.label}
               </span>
             </div>
           );
 
-          const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.color}`;
+          const buttonClasses = `w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${item.className}`;
           
           if (item.isDialog) {
             return (
@@ -130,12 +130,12 @@ export function ActionButtons() {
       <div className="w-full">
         <SosDialog>
             <Button
-                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.color}`}
+                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
                 aria-label={emergencyAction.label}
             >
                 <div className="flex flex-col items-center justify-center gap-4">
-                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24 text-white" />
-                    <span className="text-2xl sm:text-3xl font-bold text-white">
+                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24" />
+                    <span className="text-2xl sm:text-3xl font-bold">
                         {emergencyAction.label}
                     </span>
                 </div>

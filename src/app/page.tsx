@@ -28,19 +28,19 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-6">
           <Link href="/senior" passHref>
             <Button
-              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-blue-500 hover:bg-blue-600 text-white"
+              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-primary hover:bg-primary/90 text-primary-foreground"
               aria-label="어르신 대시보드로 가기"
             >
-              <Users className="w-10 h-10 text-white" />
+              <Users className="w-10 h-10" />
               <span>어르신</span>
             </Button>
           </Link>
           <Link href="/guardian" passHref>
             <Button
-              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-pink-500 hover:bg-pink-600 text-white"
+              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-secondary hover:bg-secondary/80 text-secondary-foreground"
               aria-label="보호자 대시보드로 가기"
             >
-              <Shield className="w-10 h-10 text-white" />
+              <Shield className="w-10 h-10" />
               <span>보호자</span>
             </Button>
           </Link>

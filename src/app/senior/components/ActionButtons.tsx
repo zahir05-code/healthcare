@@ -73,12 +73,12 @@ export function ActionButtons() {
       <div className="w-full">
         <SosDialog>
             <Button
-                className={`w-full h-48 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
+                className={`w-full h-56 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
                 aria-label={emergencyAction.label}
             >
                 <div className="flex flex-col items-center justify-center gap-4">
-                    <emergencyAction.icon className="h-20 w-20 sm:h-24 sm:w-24" />
-                    <span className="text-2xl sm:text-3xl font-bold">
+                    <emergencyAction.icon className="h-24 w-24 sm:h-28 sm:w-28" />
+                    <span className="text-3xl sm:text-4xl font-bold">
                         {emergencyAction.label}
                     </span>
                 </div>

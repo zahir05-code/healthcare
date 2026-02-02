@@ -12,19 +12,22 @@ export default function TranslatePage() {
   const [inputText, setInputText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [targetLang, setTargetLang] = useState<'Korean' | 'English' | null>(null);
 
-  const handleTranslate = async () => {
+  const handleTranslate = async (targetLanguage: 'Korean' | 'English') => {
     if (!inputText.trim()) return;
     setIsLoading(true);
+    setTargetLang(targetLanguage);
     setTranslatedText('');
     try {
-      const result = await translate({text: inputText});
+      const result = await translate({text: inputText, targetLanguage});
       setTranslatedText(result.translation);
     } catch (error) {
       console.error('Translation failed:', error);
       setTranslatedText("죄송합니다. 번역 중 오류가 발생했습니다.");
     }
     setIsLoading(false);
+    setTargetLang(null);
   };
 
   return (
@@ -34,22 +37,31 @@ export default function TranslatePage() {
         <div className="w-full max-w-2xl">
           <div className="grid gap-4">
             <Textarea
-              placeholder="번역할 내용을 영어 또는 한글로 입력하세요..."
+              placeholder="번역할 내용을 입력하세요..."
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               className="min-h-[150px] text-lg"
             />
-            <Button onClick={handleTranslate} disabled={isLoading || !inputText.trim()} size="lg">
-              {isLoading ? <Loader className="animate-spin" /> : '한국어 <-> 영어 번역'}
-            </Button>
+            <div className="flex gap-4">
+                <Button 
+                    onClick={() => handleTranslate('Korean')} 
+                    disabled={isLoading || !inputText.trim()} 
+                    size="lg"
+                    className="flex-1"
+                >
+                    {isLoading && targetLang === 'Korean' ? <Loader className="animate-spin" /> : '한국어로 번역'}
+                </Button>
+                <Button 
+                    onClick={() => handleTranslate('English')} 
+                    disabled={isLoading || !inputText.trim()} 
+                    size="lg"
+                    className="flex-1"
+                >
+                    {isLoading && targetLang === 'English' ? <Loader className="animate-spin" /> : '영어로 번역'}
+                </Button>
+            </div>
             
-            {isLoading && !translatedText && (
-                <div className="flex justify-center items-center p-6">
-                    <Loader className="animate-spin h-8 w-8 text-primary" />
-                </div>
-            )}
-            
-            {translatedText && (
+            {!isLoading && translatedText && (
               <Card>
                 <CardHeader>
                   <CardTitle>번역 결과</CardTitle>

@@ -11,7 +11,8 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const TranslateInputSchema = z.object({
-  text: z.string().describe('The text to translate between Korean and English.'),
+  text: z.string().describe('The text to translate.'),
+  targetLanguage: z.enum(['Korean', 'English']).describe('The language to translate the text into.'),
 });
 export type TranslateInput = z.infer<typeof TranslateInputSchema>;
 
@@ -28,10 +29,7 @@ const prompt = ai.definePrompt({
   name: 'translatePrompt',
   input: {schema: TranslateInputSchema},
   output: {schema: TranslateOutputSchema},
-  prompt: `You are an expert translator. Your task is to translate text between Korean and English.
-First, detect the language of the input text.
-If the text is in Korean, translate it to English.
-If the text is in English, translate it to Korean.
+  prompt: `You are an expert translator. Your task is to translate the given text into {{targetLanguage}}.
 
 Your final output must be a JSON object with a single key "translation" which contains the translated text. Do not include any other text or explanation.
 

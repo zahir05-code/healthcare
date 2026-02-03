@@ -2,29 +2,59 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Shield, LogIn } from 'lucide-react';
-import { useAuth } from '@/contexts/auth-context';
-import { LoginDialog } from '@/components/LoginDialog';
+import { Users, Shield, BellOff } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Home() {
-  const { isLoggedIn } = useAuth();
+  const { toast } = useToast();
+
+  const handleDisableNotifications = () => {
+    const SETTINGS_KEY = 'careconnect-notification-settings';
+    try {
+      const defaultSettings = {
+        vitals: { enabled: false, time: '09:00' },
+        medication: { enabled: true, time: '08:00' },
+      };
+      
+      const savedSettings = localStorage.getItem(SETTINGS_KEY);
+      const settings = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
+      
+      settings.vitals.enabled = false;
+      settings.medication.enabled = false;
+
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+      toast({
+        title: '알림 해제됨',
+        description: '모든 시간 지정 알림이 꺼졌습니다.',
+      });
+    } catch (error) {
+      console.error('Failed to disable notifications:', error);
+      toast({
+        variant: 'destructive',
+        title: '오류',
+        description: '알림을 해제하는 중 오류가 발생했습니다.',
+      });
+    }
+  };
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-8">
-      <div className="text-center mb-12">
-        <h1 className="font-headline text-5xl font-bold">
-          <span className="text-chart-1">케</span>
-          <span className="text-chart-5">어</span>
-          <span className="text-chart-4">커</span>
-          <span className="text-chart-2">넥</span>
-          <span className="text-chart-3">트</span>
-        </h1>
-        <p className="text-muted-foreground mt-4 text-lg">
-          어르신을 위한 든든한 디지털 도우미입니다.
-        </p>
-      </div>
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="text-center mb-12">
+          <h1 className="font-headline text-5xl font-bold">
+            <span className="text-chart-1">케</span>
+            <span className="text-chart-5">어</span>
+            <span className="text-chart-4">커</span>
+            <span className="text-chart-2">넥</span>
+            <span className="text-chart-3">트</span>
+          </h1>
+          <p className="text-muted-foreground mt-4 text-lg">
+            어르신을 위한 든든한 디지털 도우미입니다.
+          </p>
+        </div>
 
-      {isLoggedIn ? (
         <div className="flex flex-col sm:flex-row gap-6">
           <Link href="/senior" passHref>
             <Button
@@ -45,17 +75,14 @@ export default function Home() {
             </Button>
           </Link>
         </div>
-      ) : (
-        <div className="flex flex-col items-center gap-6 text-center">
-            <p className="text-xl text-muted-foreground">서비스를 이용하려면 로그인하세요.</p>
-            <LoginDialog>
-                <Button size="lg">
-                    <LogIn className="mr-2 h-5 w-5" />
-                    로그인
-                </Button>
-            </LoginDialog>
-        </div>
-      )}
+      </div>
+      
+      <div className="pb-4">
+        <Button variant="ghost" onClick={handleDisableNotifications}>
+          <BellOff className="mr-2 h-4 w-4" />
+          시간 알림 전체 해제
+        </Button>
+      </div>
     </main>
   );
 }

@@ -67,7 +67,7 @@ export function NotificationManager() {
   const lastCheckedMinute = useRef<number | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !('Notification' in window)) {
+    if (typeof window === 'undefined') {
       return;
     }
 
@@ -82,7 +82,7 @@ export function NotificationManager() {
       lastCheckedMinute.current = currentMinute;
       
       const savedSettings = localStorage.getItem(SETTINGS_KEY);
-      if (!savedSettings || Notification.permission !== 'granted') {
+      if (!savedSettings) {
         return;
       }
 
@@ -95,10 +95,9 @@ export function NotificationManager() {
             const alarmTotalMinutes = alarmHour * 60 + alarmMinute;
 
             if (currentMinute === alarmTotalMinutes) {
-              new Notification(`⏰ ${alarm.label}`, {
-                body: '설정하신 알림 시간입니다!',
-                vibrate: [200, 100, 200],
-              });
+              if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+              }
               playSound();
             }
           }

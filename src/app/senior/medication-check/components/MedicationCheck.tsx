@@ -201,10 +201,23 @@ export function MedicationCheck() {
                   </AlertDescription>
                 </Alert>
               )}
-              <p className="text-xs text-muted-foreground pt-2">
-                * 이 정보는 참고용이며, 정확한 복약 정보는 의사 또는 약사와
-                상담하세요.
-              </p>
+              <div className="text-xs text-muted-foreground pt-2 space-y-1">
+                <p>
+                  * 이 AI 분석 결과는 참고용입니다. 정확한 정보는 반드시 의사 또는 약사와 상담하세요.
+                </p>
+                <p>
+                  * 더 자세한 정보는{' '}
+                  <a 
+                    href="https://www.health.kr/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-primary underline hover:text-primary/80"
+                  >
+                    의약품안전나라(health.kr)
+                  </a>
+                  에서 직접 확인하실 수 있습니다.
+                </p>
+              </div>
             </div>
           )}
         </div>

@@ -7,14 +7,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const exercises = [
   {
     id: 'lower-body',
-    title: '튼튼 하체 운동 (6분)',
+    title: '앉아서 하는 하체 운동 (10분)',
     bodyPart: '하체',
-    description: '의자를 잡고 안전하게 따라 해보세요. 매일 꾸준히 하면 더욱 좋습니다!',
-    videoId: 'dLG89KmkA_c',
+    description: '의자에 앉아 안전하게 다리 근력을 키울 수 있는 운동입니다.',
+    videoId: 'wP3b-x0K-sI',
     details: [
-      '1단계 (2분): 제자리 걷기',
-      '2단계 (2분): 의자 스쿼트',
-      '3단계 (2분): 다리 옆으로 들어 올리기',
+      '무릎 펴기',
+      '다리 들어올리기',
+      '발목 움직이기',
     ],
   },
   {
@@ -34,25 +34,25 @@ const exercises = [
     id: 'full-body',
     title: '전신 유산소 운동 (15분)',
     bodyPart: '전신',
-    description: '집에서 쉽게 따라하며 심폐지구력과 전신 근력을 키울 수 있는 운동입니다.',
-    videoId: 'OeoD8v_5i_s',
+    description: '층간 소음 걱정 없이 서서 할 수 있는 가벼운 전신 유산소 운동입니다.',
+    videoId: '9L2b2zso1pA',
     details: [
         '제자리 걷기',
-        '가볍게 뛰기',
-        '팔다리 교차 운동',
-        '다양한 유산소 동작'
+        '가볍게 팔다리 움직이기',
+        '옆으로 걸음 옮기기',
+        '다양한 저충격 유산소 동작'
     ],
   },
   {
     id: 'stretching',
-    title: '침대 스트레칭 (10분)',
+    title: '의자 스트레칭 (12분)',
     bodyPart: '스트레칭',
-    description: '아침에 일어나서 또는 잠들기 전에 침대에서 편안하게 할 수 있는 전신 스트레칭입니다.',
-    videoId: 's3Oacxv1Ksg',
+    description: '의자에 앉아서 목, 어깨, 등, 다리 등 전신을 시원하게 풀어주는 스트레칭입니다.',
+    videoId: 'Egr_kY_n4jI',
     details: [
         '목 스트레칭',
         '어깨와 등 풀기',
-        '허리 스트레칭',
+        '허리 비틀기',
         '다리 스트레칭'
     ],
   },

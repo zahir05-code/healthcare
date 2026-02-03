@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera, Settings, Dumbbell } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera, Settings, PersonStanding } from 'lucide-react';
 import { CallDialog } from './CallDialog';
 import { SosDialog } from './SosDialog';
 
@@ -55,7 +55,7 @@ export function ActionButtons() {
     },
     {
       label: '매일 운동',
-      icon: Dumbbell,
+      icon: PersonStanding,
       className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
       href: '/senior/exercise',

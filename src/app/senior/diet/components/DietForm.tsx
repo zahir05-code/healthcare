@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Camera, Pencil, Loader, BarChart } from 'lucide-react';
 import Image from 'next/image';
 import type { AnalyzeDietInput } from '@/ai/flows/analyze-diet-flow';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
 
@@ -31,6 +32,10 @@ export function DietForm({ onAnalyze, isLoading }: DietFormProps) {
   });
   
   const [activeTab, setActiveTab] = useState<Meal>('breakfast');
+
+  const breakfastPlaceholder = PlaceHolderImages.find(p => p.id === 'diet-breakfast');
+  const lunchPlaceholder = PlaceHolderImages.find(p => p.id === 'diet-lunch');
+  const dinnerPlaceholder = PlaceHolderImages.find(p => p.id === 'diet-dinner');
 
   const handleNoteChange = (meal: Meal, note: string) => {
     setMeals(prev => ({
@@ -75,7 +80,7 @@ export function DietForm({ onAnalyze, isLoading }: DietFormProps) {
     onAnalyze(analysisInput);
   };
 
-  const renderMealTab = (meal: Meal, title: string, placeholderImage: string, imageHint: string) => {
+  const renderMealTab = (meal: Meal, title: string, placeholderImage?: string, imageHint?: string) => {
     const mealData = meals[meal];
     
     return (
@@ -88,7 +93,7 @@ export function DietForm({ onAnalyze, isLoading }: DietFormProps) {
           <CardContent className="space-y-4">
              <div className="relative aspect-video w-full overflow-hidden rounded-md border bg-muted">
                 <Image
-                    src={mealData.image || placeholderImage}
+                    src={mealData.image || placeholderImage || "https://picsum.photos/600/400"}
                     alt={`${title} 식사`}
                     fill
                     className="object-cover"
@@ -139,9 +144,9 @@ export function DietForm({ onAnalyze, isLoading }: DietFormProps) {
                 <TabsTrigger value="dinner">저녁</TabsTrigger>
             </TabsList>
             
-            {renderMealTab('breakfast', '아침', 'https://picsum.photos/seed/breakfast1/600/400', 'healthy breakfast')}
-            {renderMealTab('lunch', '점심', 'https://picsum.photos/seed/lunch1/600/400', 'healthy lunch')}
-            {renderMealTab('dinner', '저녁', 'https://picsum.photos/seed/dinner1/600/400', 'healthy dinner')}
+            {renderMealTab('breakfast', '아침', breakfastPlaceholder?.imageUrl, breakfastPlaceholder?.imageHint)}
+            {renderMealTab('lunch', '점심', lunchPlaceholder?.imageUrl, lunchPlaceholder?.imageHint)}
+            {renderMealTab('dinner', '저녁', dinnerPlaceholder?.imageUrl, dinnerPlaceholder?.imageHint)}
         </Tabs>
         <div className="mt-6">
             <Button onClick={handleAnalyzeClick} className="w-full h-14 text-lg" disabled={isLoading}>

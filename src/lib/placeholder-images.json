@@ -5,6 +5,24 @@
       "description": "A placeholder avatar for a user profile.",
       "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njk2MzQxMjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "person portrait"
+    },
+    {
+      "id": "diet-breakfast",
+      "description": "Placeholder for a breakfast meal.",
+      "imageUrl": "https://images.unsplash.com/photo-1623052935410-3fca63f73e10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxoZWFsdGh5JTIwYnJlYWtmYXN0fGVufDB8fHx8MTc3MDA5NjcxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "healthy breakfast"
+    },
+    {
+      "id": "diet-lunch",
+      "description": "Placeholder for a lunch meal.",
+      "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxoZWFsdGh5JTIwbHVuY2h8ZW58MHx8fHwxNzcwMDk2NzEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "healthy lunch"
+    },
+    {
+      "id": "diet-dinner",
+      "description": "Placeholder for a dinner meal.",
+      "imageUrl": "https://images.unsplash.com/photo-1693296303873-126aa7f6e5b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxoZWFsdGh5JTIwZGlubmVyfGVufDB8fHx8MTc3MDA5NjcxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "healthy dinner"
     }
   ]
 }

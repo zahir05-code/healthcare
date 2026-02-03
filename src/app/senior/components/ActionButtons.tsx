@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera, Settings, PersonStanding } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera, Settings, PersonStanding, UtensilsCrossed } from 'lucide-react';
 import { CallDialog } from './CallDialog';
 import { SosDialog } from './SosDialog';
 
@@ -21,37 +21,44 @@ export function ActionButtons() {
 
   const actions = [
     {
-      label: '전화',
-      icon: Phone,
-      className: "bg-primary text-primary-foreground hover:bg-primary/90",
-      isDialog: true,
-    },
-    {
       label: '복약',
       icon: Pill,
       className: "bg-primary text-primary-foreground hover:bg-primary/90",
       action: () => handleAction('복약', '복약 확인이 기록되었습니다.'),
     },
     {
+      label: '건강 기록',
+      icon: ClipboardPlus,
+      className: "bg-primary text-primary-foreground hover:bg-primary/90",
+      isLink: true,
+      href: '/senior/health',
+    },
+    {
       label: '일정 보기',
       icon: Calendar,
-      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      className: "bg-primary text-primary-foreground hover:bg-primary/90",
       isLink: true,
       href: '/senior/schedule',
     },
     {
-      label: '번역',
-      icon: Languages,
-      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-      isLink: true,
-      href: '/senior/translate',
+        label: '알림 설정',
+        icon: Settings,
+        className: "bg-primary text-primary-foreground hover:bg-primary/90",
+        isLink: true,
+        href: '/senior/settings',
     },
     {
-      label: '건강 기록',
-      icon: ClipboardPlus,
-      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      label: '식단 관리',
+      icon: UtensilsCrossed,
+      className: "bg-accent text-accent-foreground hover:bg-accent/90",
       isLink: true,
-      href: '/senior/health',
+      href: '/senior/diet',
+    },
+    {
+        label: '전화',
+        icon: Phone,
+        className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        isDialog: true,
     },
     {
       label: '매일 운동',
@@ -63,16 +70,16 @@ export function ActionButtons() {
     {
       label: '약 성분 확인',
       icon: Camera,
-      className: "bg-accent text-accent-foreground hover:bg-accent/90",
+      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
       href: '/senior/medication-check',
     },
-    {
-      label: '알림 설정',
-      icon: Settings,
+     {
+      label: '번역',
+      icon: Languages,
       className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       isLink: true,
-      href: '/senior/settings',
+      href: '/senior/translate',
     },
   ];
 

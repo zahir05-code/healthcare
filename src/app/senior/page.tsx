@@ -1,7 +1,6 @@
 import { Header } from '@/components/Header';
 import { ActionButtons } from './components/ActionButtons';
 import { Chatbot } from './components/Chatbot';
-import { NotificationManager } from './components/NotificationManager';
 
 export default function SeniorPage() {
   return (
@@ -11,7 +10,6 @@ export default function SeniorPage() {
         <ActionButtons />
       </main>
       <Chatbot />
-      <NotificationManager />
     </div>
   );
 }

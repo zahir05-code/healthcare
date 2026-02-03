@@ -5,26 +5,62 @@ import type { NotificationSettings } from '@/lib/types';
 
 const SETTINGS_KEY = 'careconnect-notification-settings';
 
+// --- Global Audio Management ---
+let audio: {
+    context: AudioContext;
+    gainNode: GainNode;
+    intervalId: ReturnType<typeof setInterval> | null;
+} | null = null;
+
 function playSound() {
+    if (audio) return; // Already playing
+
     const context = new (window.AudioContext || (window as any).webkitAudioContext)();
     if (!context) return;
     
-    const oscillator = context.createOscillator();
     const gainNode = context.createGain();
-
-    oscillator.connect(gainNode);
     gainNode.connect(context.destination);
-
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(440, context.currentTime);
-    oscillator.frequency.linearRampToValueAtTime(880, context.currentTime + 0.1);
-    
     gainNode.gain.setValueAtTime(0.3, context.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.5);
 
-    oscillator.start(context.currentTime);
-    oscillator.stop(context.currentTime + 0.5);
+    const playBeep = () => {
+        const oscillator = context.createOscillator();
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(880, context.currentTime);
+        oscillator.connect(gainNode);
+        oscillator.start(context.currentTime);
+        oscillator.stop(context.currentTime + 0.2);
+    };
+
+    playBeep(); // Play immediately
+    const intervalId = setInterval(playBeep, 1000);
+
+    audio = { context, gainNode, intervalId };
+
+    // Automatically stop after 15 seconds
+    setTimeout(stopSound, 15000);
 }
+
+function stopSound() {
+    if (audio) {
+        if (audio.intervalId) {
+            clearInterval(audio.intervalId);
+        }
+        audio.gainNode.gain.exponentialRampToValueAtTime(0.00001, audio.context.currentTime + 1);
+        
+        const currentAudio = audio; // Capture current audio state
+        audio = null; // Prevent new sounds from being stopped by this timeout
+        
+        setTimeout(() => {
+            currentAudio?.context.close();
+        }, 1000);
+    }
+}
+
+// Expose stopSound globally
+if (typeof window !== 'undefined') {
+    (window as any).stopAlarmSound = stopSound;
+}
+// --- End Global Audio Management ---
 
 
 export function NotificationManager() {
@@ -76,6 +112,16 @@ export function NotificationManager() {
 
     return () => {
       clearInterval(intervalId);
+    };
+  }, []);
+
+  // Global function cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopSound();
+      if (typeof window !== 'undefined' && (window as any).stopAlarmSound) {
+        delete (window as any).stopAlarmSound;
+      }
     };
   }, []);
 

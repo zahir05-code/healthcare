@@ -2,33 +2,24 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Shield, BellOff } from 'lucide-react';
+import { Users, Shield, VolumeX } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { NotificationSettings } from '@/lib/types';
 
 export default function Home() {
   const { toast } = useToast();
 
-  const handleDisableNotifications = () => {
-    const SETTINGS_KEY = 'careconnect-notification-settings';
-    try {
-      const savedSettings = localStorage.getItem(SETTINGS_KEY);
-      if (savedSettings) {
-        const settings: NotificationSettings = JSON.parse(savedSettings);
-        const disabledSettings = settings.map(alarm => ({ ...alarm, enabled: false }));
-        localStorage.setItem(SETTINGS_KEY, JSON.stringify(disabledSettings));
-      }
-
+  const handleStopSound = () => {
+    if (typeof window !== 'undefined' && (window as any).stopAlarmSound) {
+      (window as any).stopAlarmSound();
       toast({
-        title: '알림 해제됨',
-        description: '모든 시간 지정 알림이 꺼졌습니다.',
+        title: '알림 소리 정지됨',
+        description: '현재 울리는 알림 소리가 꺼졌습니다.',
       });
-    } catch (error) {
-      console.error('Failed to disable notifications:', error);
+    } else {
       toast({
         variant: 'destructive',
-        title: '오류',
-        description: '알림을 해제하는 중 오류가 발생했습니다.',
+        title: '정지할 알림 없음',
+        description: '현재 울리는 알림이 없습니다.',
       });
     }
   };
@@ -73,9 +64,9 @@ export default function Home() {
       </div>
       
       <div className="pb-4">
-        <Button variant="ghost" onClick={handleDisableNotifications}>
-          <BellOff className="mr-2 h-4 w-4" />
-          시간 알림 전체 해제
+        <Button variant="ghost" onClick={handleStopSound}>
+          <VolumeX className="mr-2 h-4 w-4" />
+          알림 소리 끄기
         </Button>
       </div>
     </main>

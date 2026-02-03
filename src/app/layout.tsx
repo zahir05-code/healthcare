@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
+import { NotificationManager } from './senior/components/NotificationManager';
 
 export const metadata: Metadata = {
   title: '케어커넥트',
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         {children}
         <Toaster />
+        <NotificationManager />
       </body>
     </html>
   );

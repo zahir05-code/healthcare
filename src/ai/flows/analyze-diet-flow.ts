@@ -44,19 +44,17 @@ const prompt = ai.definePrompt({
   name: 'analyzeDietPrompt',
   input: {schema: AnalyzeDietInputSchema},
   output: {schema: AnalyzeDietOutputSchema},
-  prompt: `You are an expert nutritionist AI specializing in senior healthcare. Your user is an elderly person in Korea.
-Analyze the user's meals for the entire day (breakfast, lunch, and dinner) based on the provided text descriptions and images.
+  prompt: `당신은 한국 어르신들을 위한 영양 관리 전문 AI입니다. 제공된 아침, 점심, 저녁 식사 기록(글과 사진)을 분석해 주세요.
 
-Your task is to:
-1.  Identify all the food items from the meals.
-2.  Estimate the daily intake for the following 6 essential food groups for seniors: 곡물(Grains), 단백질(Protein), 채소(Vegetables), 과일(Fruits), 유제품(Dairy), 지방(Fats).
-3.  For each food group, determine if the intake is 부족 (insufficient), 적정 (appropriate), or 과다 (excessive) based on general dietary guidelines for seniors.
-4.  Provide a short, simple, one-sentence recommendation for each food group.
-5.  Write a brief, encouraging, and easy-to-understand overall summary (2-3 sentences) of the day's diet.
-6.  Always use polite Korean (존댓말).
-7.  Respond ONLY with a valid JSON object matching the output schema.
+**분석 지침:**
+1.  식사 기록에서 모든 음식 항목을 확인합니다.
+2.  6가지 식품군('곡물', '단백질', '채소', '과일', '유제품', '지방') 각각의 섭취량을 추정합니다.
+3.  각 식품군 섭취량이 어르신 건강 기준에 따라 '부족', '적정', '과다' 중 어디에 해당하는지 판단해야 합니다.
+4.  각 식품군에 대해 실천하기 쉬운 한 문장의 조언을 한국어로 작성합니다.
+5.  하루 식단에 대한 전반적인 평가와 격려를 담아 2-3 문장의 쉬운 요약(summary)을 한국어 존댓말로 작성합니다.
+6.  응답은 반드시 아래에 명시된 출력 스키마(output schema)에 맞는 JSON 형식이어야 합니다. 다른 설명 없이 JSON 객체만 반환해 주세요.
 
-Here is the meal data:
+**식단 기록:**
 
 **아침 식사:**
 - 글: {{{breakfast.note}}}

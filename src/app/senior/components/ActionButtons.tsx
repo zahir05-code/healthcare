@@ -81,34 +81,18 @@ export function ActionButtons() {
       isLink: true,
       href: '/senior/translate',
     },
+    {
+      label: '호출',
+      icon: Siren,
+      className: "bg-accent text-accent-foreground hover:bg-accent/90",
+      isSosDialog: true,
+    },
   ];
-
-  const emergencyAction = {
-    label: '긴급 호출',
-    icon: Siren,
-    className: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-  };
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
-      <div className="w-full">
-        <SosDialog>
-            <Button
-                className={`w-full h-56 rounded-2xl shadow-lg transition-transform hover:scale-105 ${emergencyAction.className}`}
-                aria-label={emergencyAction.label}
-            >
-                <div className="flex flex-col items-center justify-center gap-4">
-                    <emergencyAction.icon className="h-28 w-28" />
-                    <span className="text-4xl font-bold">
-                        {emergencyAction.label}
-                    </span>
-                </div>
-            </Button>
-        </SosDialog>
-      </div>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full">
-        {actions.map((item) => {
+        {actions.map((item: any) => {
           const content = (
             <div className="flex flex-col items-center justify-center gap-4">
               <item.icon className="h-20 w-20 sm:h-24 sm:w-24" />
@@ -131,6 +115,21 @@ export function ActionButtons() {
                     {content}
                   </Button>
                 </CallDialog>
+              </div>
+            );
+          }
+
+          if (item.isSosDialog) {
+            return (
+              <div key={item.label}>
+                <SosDialog>
+                  <Button
+                    className={buttonClasses}
+                    aria-label={item.label}
+                  >
+                    {content}
+                  </Button>
+                </SosDialog>
               </div>
             );
           }

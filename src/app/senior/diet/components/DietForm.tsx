@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Camera, Loader, Pencil } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Camera, Pencil, Loader, BarChart } from 'lucide-react';
 import Image from 'next/image';
+import type { AnalyzeDietInput } from '@/ai/flows/analyze-diet-flow';
 
 type Meal = 'breakfast' | 'lunch' | 'dinner';
 
@@ -16,8 +16,12 @@ interface MealData {
   note: string;
 }
 
-export function DietForm() {
-  const { toast } = useToast();
+interface DietFormProps {
+    onAnalyze: (data: AnalyzeDietInput) => void;
+    isLoading: boolean;
+}
+
+export function DietForm({ onAnalyze, isLoading }: DietFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [meals, setMeals] = useState<Record<Meal, MealData>>({
@@ -27,7 +31,6 @@ export function DietForm() {
   });
   
   const [activeTab, setActiveTab] = useState<Meal>('breakfast');
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleNoteChange = (meal: Meal, note: string) => {
     setMeals(prev => ({
@@ -54,17 +57,22 @@ export function DietForm() {
     fileInputRef.current?.click();
   };
 
-  const handleSave = (meal: Meal) => {
-    setIsLoading(true);
-    // Simulate saving data
-    console.log(`Saving ${meal} data:`, meals[meal]);
-    setTimeout(() => {
-      toast({
-        title: `${meal === 'breakfast' ? '아침' : meal === 'lunch' ? '점심' : '저녁'} 식단 저장됨`,
-        description: '식단이 성공적으로 기록되었습니다.',
-      });
-      setIsLoading(false);
-    }, 1000);
+  const handleAnalyzeClick = () => {
+    const analysisInput: AnalyzeDietInput = {
+        breakfast: {
+            note: meals.breakfast.note,
+            photoDataUri: meals.breakfast.image || undefined,
+        },
+        lunch: {
+            note: meals.lunch.note,
+            photoDataUri: meals.lunch.image || undefined,
+        },
+        dinner: {
+            note: meals.dinner.note,
+            photoDataUri: meals.dinner.image || undefined,
+        }
+    };
+    onAnalyze(analysisInput);
   };
 
   const renderMealTab = (meal: Meal, title: string, placeholderImage: string, imageHint: string) => {
@@ -72,7 +80,7 @@ export function DietForm() {
     
     return (
       <TabsContent value={meal} key={meal}>
-        <Card>
+        <Card className="border-none shadow-none">
           <CardHeader>
             <CardTitle>{title}</CardTitle>
             <CardDescription>사진을 찍거나 글로 식단을 기록하세요.</CardDescription>
@@ -88,7 +96,7 @@ export function DietForm() {
                 />
             </div>
 
-            <Button onClick={handleTakePhotoClick} className="w-full">
+            <Button onClick={handleTakePhotoClick} className="w-full" variant="outline">
                 <Camera className="mr-2" /> {mealData.image ? '사진 다시 찍기' : '사진 찍어 기록하기'}
             </Button>
             <input
@@ -112,10 +120,6 @@ export function DietForm() {
                 rows={4}
               />
             </div>
-            
-            <Button onClick={() => handleSave(meal)} className="w-full" disabled={isLoading}>
-              {isLoading ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : `${title} 식단 저장`}
-            </Button>
           </CardContent>
         </Card>
       </TabsContent>
@@ -123,20 +127,28 @@ export function DietForm() {
   };
   
   return (
-    <Tabs 
-        defaultValue="breakfast" 
-        className="w-full max-w-2xl"
-        onValueChange={(value) => setActiveTab(value as Meal)}
-    >
-      <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="breakfast">아침</TabsTrigger>
-        <TabsTrigger value="lunch">점심</TabsTrigger>
-        <TabsTrigger value="dinner">저녁</TabsTrigger>
-      </TabsList>
-      
-      {renderMealTab('breakfast', '아침', 'https://picsum.photos/seed/breakfast1/600/400', 'healthy breakfast')}
-      {renderMealTab('lunch', '점심', 'https://picsum.photos/seed/lunch1/600/400', 'healthy lunch')}
-      {renderMealTab('dinner', '저녁', 'https://picsum.photos/seed/dinner1/600/400', 'healthy dinner')}
-    </Tabs>
+    <div className="w-full max-w-2xl">
+        <Tabs 
+            defaultValue="breakfast" 
+            className="w-full"
+            onValueChange={(value) => setActiveTab(value as Meal)}
+        >
+            <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="breakfast">아침</TabsTrigger>
+                <TabsTrigger value="lunch">점심</TabsTrigger>
+                <TabsTrigger value="dinner">저녁</TabsTrigger>
+            </TabsList>
+            
+            {renderMealTab('breakfast', '아침', 'https://picsum.photos/seed/breakfast1/600/400', 'healthy breakfast')}
+            {renderMealTab('lunch', '점심', 'https://picsum.photos/seed/lunch1/600/400', 'healthy lunch')}
+            {renderMealTab('dinner', '저녁', 'https://picsum.photos/seed/dinner1/600/400', 'healthy dinner')}
+        </Tabs>
+        <div className="mt-6">
+            <Button onClick={handleAnalyzeClick} className="w-full h-14 text-lg" disabled={isLoading}>
+                {isLoading ? <Loader className="mr-2 h-5 w-5 animate-spin" /> : <BarChart className="mr-2 h-5 w-5" />}
+                오늘 식단 분석하기
+            </Button>
+        </div>
+    </div>
   );
 }

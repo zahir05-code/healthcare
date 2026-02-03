@@ -2,3 +2,4 @@
 import './flows/translate-flow';
 import './flows/chat-flow';
 import './flows/medication-check-flow';
+import './flows/analyze-diet-flow';

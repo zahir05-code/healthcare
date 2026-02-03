@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -17,27 +17,30 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { Bell } from 'lucide-react';
+import { Bell, Plus, Trash2 } from 'lucide-react';
 import type { NotificationSettings } from '@/lib/types';
+import { Separator } from '@/components/ui/separator';
 
 const SETTINGS_KEY = 'careconnect-notification-settings';
 
+const alarmSchema = z.object({
+  id: z.string(),
+  label: z.string().min(1, "알림 이름을 입력해주세요."),
+  time: z.string(),
+  enabled: z.boolean(),
+});
+
 const settingsSchema = z.object({
-  vitals: z.object({
-    enabled: z.boolean(),
-    time: z.string(),
-  }),
-  medication: z.object({
-    enabled: z.boolean(),
-    time: z.string(),
-  }),
+  alarms: z.array(alarmSchema).max(10, "알림은 최대 10개까지 추가할 수 있습니다."),
 });
 
 type SettingsFormValues = z.infer<typeof settingsSchema>;
 
 const defaultValues: SettingsFormValues = {
-  vitals: { enabled: false, time: '09:00' },
-  medication: { enabled: true, time: '08:00' },
+  alarms: [
+    { id: '1', label: '아침 약 복용', time: '08:00', enabled: true },
+    { id: '2', label: '활력 징후 측정', time: '09:00', enabled: true },
+  ],
 };
 
 export function NotificationSettingsForm() {
@@ -52,23 +55,32 @@ export function NotificationSettingsForm() {
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsSchema),
-    defaultValues,
+    defaultValues: { alarms: [] },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "alarms",
   });
 
   useEffect(() => {
     const savedSettings = localStorage.getItem(SETTINGS_KEY);
     if (savedSettings) {
       try {
-        const parsedSettings = JSON.parse(savedSettings);
-        form.reset(parsedSettings);
+        const parsedSettings: NotificationSettings = JSON.parse(savedSettings);
+        form.reset({ alarms: parsedSettings });
       } catch (e) {
         console.error("Failed to parse notification settings:", e);
+        form.reset(defaultValues);
       }
+    } else {
+      form.reset(defaultValues);
     }
   }, [form]);
 
   const onSubmit = (data: SettingsFormValues) => {
-    if (notificationPermission !== 'granted' && (data.medication.enabled || data.vitals.enabled)) {
+    const hasEnabledAlarms = data.alarms.some(alarm => alarm.enabled);
+    if (notificationPermission !== 'granted' && hasEnabledAlarms) {
       toast({
         variant: 'destructive',
         title: '알림 권한 필요',
@@ -76,7 +88,7 @@ export function NotificationSettingsForm() {
       });
       return;
     }
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(data));
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(data.alarms));
     toast({
       title: '설정 저장됨',
       description: '알림 설정이 성공적으로 저장되었습니다.',
@@ -103,7 +115,7 @@ export function NotificationSettingsForm() {
       <CardHeader>
         <CardTitle>시간 지정 알림</CardTitle>
         <CardDescription>
-          활력 징후 측정 시간과 약 복용 시간을 설정하여 알림을 받으세요.
+          하루 최대 10개까지 알림을 설정할 수 있습니다.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">
@@ -128,69 +140,85 @@ export function NotificationSettingsForm() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="medication.enabled"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">약 복용 시간 알림</FormLabel>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            {form.watch('medication.enabled') && (
-              <FormField
-                control={form.control}
-                name="medication.time"
-                render={({ field }) => (
-                  <FormItem className="pl-4 -mt-2">
-                    <FormLabel>복용 시간</FormLabel>
-                    <FormControl>
-                      <Input type="time" className="w-48" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+            <div className="space-y-4">
+              {fields.map((field, index) => (
+                <Card key={field.id} className="p-4">
+                   <div className="flex justify-between items-start">
+                     <div className="flex-1 space-y-4">
+                        <FormField
+                          control={form.control}
+                          name={`alarms.${index}.label`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>알림 이름</FormLabel>
+                              <FormControl>
+                                <Input placeholder="예: 점심 약 복용" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <div className="flex items-end gap-4">
+                            <FormField
+                                control={form.control}
+                                name={`alarms.${index}.time`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>알림 시간</FormLabel>
+                                    <FormControl>
+                                    <Input type="time" className="w-40" {...field} />
+                                    </FormControl>
+                                </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`alarms.${index}.enabled`}
+                                render={({ field: switchField }) => (
+                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
+                                        <FormLabel className="mr-4">활성화</FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                            checked={switchField.value}
+                                            onCheckedChange={switchField.onChange}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                     </div>
+                     <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => remove(index)}
+                        className="ml-2 mt-1"
+                        aria-label="알림 삭제"
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                   </div>
+                </Card>
+              ))}
+            </div>
+
+            {fields.length < 10 && (
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => append({ id: Date.now().toString(), label: '', time: '12:00', enabled: true })}
+                >
+                    <Plus className="mr-2 h-4 w-4" />
+                    새 알림 추가
+                </Button>
+            )}
+            {form.formState.errors.alarms?.root && (
+                <p className="text-sm font-medium text-destructive">{form.formState.errors.alarms.root.message}</p>
             )}
 
-            <FormField
-              control={form.control}
-              name="vitals.enabled"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">활력 징후 측정 알림</FormLabel>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            {form.watch('vitals.enabled') && (
-              <FormField
-                control={form.control}
-                name="vitals.time"
-                render={({ field }) => (
-                  <FormItem className="pl-4 -mt-2">
-                    <FormLabel>측정 시간</FormLabel>
-                    <FormControl>
-                      <Input type="time" className="w-48" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            )}
+            <Separator />
+
             <Button type="submit" className="w-full">
               설정 저장
             </Button>

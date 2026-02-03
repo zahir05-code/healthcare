@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Users, Shield, BellOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import type { NotificationSettings } from '@/lib/types';
 
 export default function Home() {
   const { toast } = useToast();
@@ -11,18 +12,12 @@ export default function Home() {
   const handleDisableNotifications = () => {
     const SETTINGS_KEY = 'careconnect-notification-settings';
     try {
-      const defaultSettings = {
-        vitals: { enabled: false, time: '09:00' },
-        medication: { enabled: true, time: '08:00' },
-      };
-      
       const savedSettings = localStorage.getItem(SETTINGS_KEY);
-      const settings = savedSettings ? JSON.parse(savedSettings) : defaultSettings;
-      
-      settings.vitals.enabled = false;
-      settings.medication.enabled = false;
-
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      if (savedSettings) {
+        const settings: NotificationSettings = JSON.parse(savedSettings);
+        const disabledSettings = settings.map(alarm => ({ ...alarm, enabled: false }));
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(disabledSettings));
+      }
 
       toast({
         title: '알림 해제됨',

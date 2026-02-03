@@ -52,13 +52,11 @@ export interface Contact {
   relationship: string;
 }
 
-export interface NotificationSettings {
-  vitals: {
-    enabled: boolean;
-    time: string; // "HH:mm"
-  };
-  medication: {
-    enabled: boolean;
-    time: string; // "HH:mm"
-  };
+export interface AlarmSetting {
+  id: string;
+  label: string;
+  time: string; // "HH:mm"
+  enabled: boolean;
 }
+
+export type NotificationSettings = AlarmSetting[];

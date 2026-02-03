@@ -52,27 +52,21 @@ export function NotificationManager() {
 
       try {
         const settings: NotificationSettings = JSON.parse(savedSettings);
-        const [medicationHour, medicationMinute] = settings.medication.time.split(':').map(Number);
-        const medicationTotalMinutes = medicationHour * 60 + medicationMinute;
+        
+        settings.forEach(alarm => {
+          if (alarm.enabled) {
+            const [alarmHour, alarmMinute] = alarm.time.split(':').map(Number);
+            const alarmTotalMinutes = alarmHour * 60 + alarmMinute;
 
-        const [vitalsHour, vitalsMinute] = settings.vitals.time.split(':').map(Number);
-        const vitalsTotalMinutes = vitalsHour * 60 + vitalsMinute;
-
-        if (settings.medication.enabled && currentMinute === medicationTotalMinutes) {
-          new Notification('💊 약 복용 시간입니다', {
-            body: '잊지 말고 약을 챙겨드세요!',
-            vibrate: [200, 100, 200],
-          });
-          playSound();
-        }
-
-        if (settings.vitals.enabled && currentMinute === vitalsTotalMinutes) {
-          new Notification('🩺 활력 징후 측정 시간입니다', {
-            body: '혈압과 혈당을 측정하고 기록해주세요.',
-            vibrate: [200, 100, 200],
-          });
-          playSound();
-        }
+            if (currentMinute === alarmTotalMinutes) {
+              new Notification(`⏰ ${alarm.label}`, {
+                body: '설정하신 알림 시간입니다!',
+                vibrate: [200, 100, 200],
+              });
+              playSound();
+            }
+          }
+        });
       } catch (e) {
         console.error("Failed to process notifications:", e);
       }

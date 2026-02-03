@@ -51,3 +51,14 @@ export interface Contact {
   phone: string;
   relationship: string;
 }
+
+export interface NotificationSettings {
+  vitals: {
+    enabled: boolean;
+    time: string; // "HH:mm"
+  };
+  medication: {
+    enabled: boolean;
+    time: string; // "HH:mm"
+  };
+}

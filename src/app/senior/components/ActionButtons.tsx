@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera } from 'lucide-react';
+import { Phone, Pill, Calendar, Siren, Languages, ClipboardPlus, Camera, Settings } from 'lucide-react';
 import { CallDialog } from './CallDialog';
 import { SosDialog } from './SosDialog';
 
@@ -60,6 +60,13 @@ export function ActionButtons() {
       isLink: true,
       href: '/senior/medication-check',
     },
+    {
+      label: '알림 설정',
+      icon: Settings,
+      className: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      isLink: true,
+      href: '/senior/settings',
+    },
   ];
 
   const emergencyAction = {
@@ -77,8 +84,8 @@ export function ActionButtons() {
                 aria-label={emergencyAction.label}
             >
                 <div className="flex flex-col items-center justify-center gap-4">
-                    <emergencyAction.icon className="h-24 w-24 sm:h-28 sm:w-28" />
-                    <span className="text-3xl sm:text-4xl font-bold">
+                    <emergencyAction.icon className="h-28 w-28" />
+                    <span className="text-4xl font-bold">
                         {emergencyAction.label}
                     </span>
                 </div>

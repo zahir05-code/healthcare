@@ -84,7 +84,7 @@ export function ActionButtons() {
     {
       label: '호출',
       icon: Siren,
-      className: "bg-accent text-accent-foreground hover:bg-accent/90",
+      className: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
       isSosDialog: true,
     },
   ];

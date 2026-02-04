@@ -36,7 +36,7 @@ export function Header({ backHref }: HeaderProps) {
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
             <path d="M3.22 12H9.5l.7-1 2.1 2 1.4-1 1.8 1h5.8" />
           </svg>
-          <span className="text-xl font-bold text-foreground">케어커넥트</span>
+          <span className="text-xl font-bold text-foreground">헬스케어</span>
         </Link>
         <div className="ml-auto"></div>
       </div>

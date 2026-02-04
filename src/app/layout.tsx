@@ -4,7 +4,7 @@ import './globals.css';
 import { NotificationManager } from './senior/components/NotificationManager';
 
 export const metadata: Metadata = {
-  title: '케어커넥트',
+  title: '헬스케어',
   description: '어르신과 보호자를 위한 디지털 비서.',
 };
 

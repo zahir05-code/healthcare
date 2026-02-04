@@ -35,12 +35,8 @@ export default function Home() {
       <div className="absolute inset-0 bg-black/30" />
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center">
         <div className="text-center mb-12 rounded-xl bg-white/70 dark:bg-black/50 p-6 backdrop-blur-sm">
-          <h1 className="font-headline text-5xl font-bold">
-            <span className="text-chart-1">케</span>
-            <span className="text-chart-5">어</span>
-            <span className="text-chart-4">커</span>
-            <span className="text-chart-2">넥</span>
-            <span className="text-chart-3">트</span>
+          <h1 className="font-headline text-5xl font-bold text-foreground">
+            헬스케어
           </h1>
           <p className="text-foreground mt-4 text-lg">
             어르신을 위한 든든한 디지털 도우미입니다.

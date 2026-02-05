@@ -26,11 +26,11 @@ export default function Home() {
 
 
   return (
-    <main 
-        className="relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center p-8"
-        style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2070&auto=format&fit=crop')"
-        }}
+    <main
+      className="relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center p-8"
+      style={{
+        backgroundImage: "url('https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=2070&auto=format&fit=crop')"
+      }}
     >
       <div className="absolute inset-0 bg-black/30" />
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center">
@@ -62,9 +62,18 @@ export default function Home() {
               <span>보호자</span>
             </Button>
           </Link>
+          <Link href="/kakao" passHref>
+            <Button
+              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-[#FEE500] hover:bg-[#FDD800] text-black"
+              aria-label="카카오 기능 체험"
+            >
+              <span className="text-3xl font-bold">TALK</span>
+              <span>카카오 연동</span>
+            </Button>
+          </Link>
         </div>
       </div>
-      
+
       <div className="relative z-10 pb-4">
         <Button variant="ghost" onClick={handleStopSound} className="bg-white/80 hover:bg-white/95 dark:bg-black/60 dark:hover:bg-black/80 dark:text-white">
           <VolumeX className="mr-2 h-4 w-4" />

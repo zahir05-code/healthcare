@@ -82,7 +82,7 @@ export function LoginDialog({ children }: { children: React.ReactNode }) {
             type="button"
             onClick={handleKakaoLogin}
             disabled={isLoading}
-            className="w-full bg-[#FEE500] hover:bg-[#FDD800] text-[#000000] font-medium"
+            className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#000000] font-medium"
           >
             {isLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -1,13 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { LoginDialog } from '@/components/LoginDialog';
-import { Users, Shield, VolumeX, MessageCircle } from 'lucide-react';
+import { Users, Shield, VolumeX, MessageCircle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/auth-context';
+import { initKakaoSDK } from '@/lib/kakao';
 
 export default function Home() {
   const { toast } = useToast();
+  const { loginWithKakao, isLoading: isAuthLoading, isLoggedIn, logout } = useAuth();
+  const [localLoading, setLocalLoading] = useState(false);
+
+  const isLoading = isAuthLoading || localLoading;
 
   const handleStopSound = () => {
     if (typeof window !== 'undefined' && (window as any).stopAlarmSound) {
@@ -25,6 +31,26 @@ export default function Home() {
     }
   };
 
+  const handleKakaoLogin = async () => {
+    setLocalLoading(true);
+    try {
+      initKakaoSDK();
+      await loginWithKakao();
+      toast({
+        title: '로그인 성공',
+        description: '카카오 계정으로 로그인되었습니다.',
+      });
+    } catch (error) {
+      console.error('카카오 로그인 실패:', error);
+      toast({
+        variant: 'destructive',
+        title: '로그인 실패',
+        description: '카카오 로그인 중 오류가 발생했습니다. 다시 시도해주세요.',
+      });
+    } finally {
+      setLocalLoading(false);
+    }
+  };
 
   return (
     <main
@@ -63,31 +89,43 @@ export default function Home() {
               <span>보호자</span>
             </Button>
           </Link>
-          <Link href="/kakao" passHref>
-            <Button
-              className="h-32 w-64 text-xl flex flex-col gap-2 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-[#FEE500] hover:bg-[#FDD800] text-black"
-              aria-label="카카오 기능 체험"
-            >
-              <span className="text-3xl font-bold">TALK</span>
-              <span>카카오 연동</span>
-            </Button>
-          </Link>
         </div>
       </div>
 
       <div className="relative z-10 pb-4 flex flex-col items-center gap-4">
-        <Button variant="ghost" onClick={handleStopSound} className="bg-white/80 hover:bg-white/95 dark:bg-black/60 dark:hover:bg-black/80 dark:text-white">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={handleStopSound}
+          className="bg-white hover:bg-gray-100 text-black shadow-sm border-none"
+        >
           <VolumeX className="mr-2 h-4 w-4" />
           알림 소리 끄기
         </Button>
 
         {/* 메인 화면 하단 로그인 버튼 (카카오 스타일) */}
-        <LoginDialog>
-          <Button className="w-48 bg-[#FEE500] hover:bg-[#FDD800] text-black shadow-md">
-            <MessageCircle className="mr-2 h-4 w-4" />
+        {!isLoggedIn ? (
+          <Button
+            onClick={handleKakaoLogin}
+            disabled={isLoading}
+            className="w-48 bg-yellow-400 hover:bg-yellow-500 text-black shadow-md"
+          >
+            {isLoading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <MessageCircle className="mr-2 h-4 w-4" />
+            )}
             카카오로 로그인
           </Button>
-        </LoginDialog>
+        ) : (
+          <Button
+            onClick={logout}
+            variant="outline"
+            className="w-48 bg-white/80 hover:bg-white text-black shadow-md border-none"
+          >
+            로그아웃
+          </Button>
+        )}
       </div>
     </main>
   );

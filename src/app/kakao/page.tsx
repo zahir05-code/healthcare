@@ -138,7 +138,7 @@ function KakaoDemoContent() {
                                         </div>
                                     ) : (
                                         <LoginDialog>
-                                            <Button className="w-full bg-[#FEE500] hover:bg-[#FDD800] text-black">
+                                            <Button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black">
                                                 <MessageCircle className="mr-2 h-4 w-4" />
                                                 카카오로 로그인
                                             </Button>

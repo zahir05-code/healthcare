@@ -1,5 +1,10 @@
+node_modules/
+.env
+todos.db
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+node_modules/
+.env
+.todos.db
 # dependencies
 /node_modules
 /.pnp
@@ -35,11 +40,48 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+# next-env.d.ts is ignored by default in some templates, but often good to track. 
+# Keeping existing rule if preferred, or remove to track it.
 next-env.d.ts
 
+# Genkit
 .genkit/*
-.env*
 
-# firebase
+# Environment variables & Secrets (IMPORTANT)
+# These files contain API keys, passwords, and other sensitive information.
+# MUST NOT be committed to git.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Firebase
 firebase-debug.log
 firestore-debug.log
+
+# IDEs & Editors
+.vscode/
+.idea/
+.idx/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+node_modules/
+.env
+dist/
+build/
+.DS_Store
+node_modules/
+.env
+todos.db
+serviceAccountKey.json
+node_modules/
+.env
+todos.db
+serviceAccountKey.json

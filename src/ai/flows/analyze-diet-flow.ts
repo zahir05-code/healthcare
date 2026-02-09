@@ -7,14 +7,14 @@
  * - AnalyzeDietOutput - The return type for the analyzeDiet function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const MealInputSchema = z.object({
   note: z.string().describe('A text description of the meal.'),
   photoDataUri: z.string().optional().describe(
-      "A photo of the meal, as a data URI. Format: 'data:<mimetype>;base64,<encoded_data>'."
-    ),
+    "A photo of the meal, as a data URI. Format: 'data:<mimetype>;base64,<encoded_data>'."
+  ),
 });
 
 const AnalyzeDietInputSchema = z.object({
@@ -25,9 +25,9 @@ const AnalyzeDietInputSchema = z.object({
 export type AnalyzeDietInput = z.infer<typeof AnalyzeDietInputSchema>;
 
 const NutritionalAnalysisSchema = z.object({
-    group: z.enum(['곡물', '단백질', '채소', '과일', '유제품', '지방']),
-    status: z.enum(['부족', '적정', '과다']),
-    recommendation: z.string().describe('A short recommendation for this food group in Korean.'),
+  group: z.enum(['곡물', '단백질', '채소', '과일', '유제품', '지방']),
+  status: z.enum(['부족', '적정', '과다']),
+  recommendation: z.string().describe('A short recommendation for this food group in Korean.'),
 });
 
 const AnalyzeDietOutputSchema = z.object({
@@ -42,8 +42,8 @@ export async function analyzeDiet(input: AnalyzeDietInput): Promise<AnalyzeDietO
 
 const prompt = ai.definePrompt({
   name: 'analyzeDietPrompt',
-  input: {schema: AnalyzeDietInputSchema},
-  output: {schema: AnalyzeDietOutputSchema},
+  input: { schema: AnalyzeDietInputSchema },
+  output: { schema: AnalyzeDietOutputSchema },
   prompt: `당신은 한국 어르신들을 위한 영양 관리 전문 AI입니다. 제공된 아침, 점심, 저녁 식사 기록(글과 사진)을 분석해 주세요.
 
 **분석 지침:**
@@ -85,15 +85,44 @@ const analyzeDietFlow = ai.defineFlow(
   async input => {
     // Ensure at least one meal has some data
     if (!input.breakfast.note && !input.breakfast.photoDataUri &&
-        !input.lunch.note && !input.lunch.photoDataUri &&
-        !input.dinner.note && !input.dinner.photoDataUri) {
-          return {
-            summary: "기록된 식단이 없습니다. 아침, 점심, 저녁 식사를 기록하고 분석 버튼을 눌러주세요.",
-            analysis: [],
-          };
+      !input.lunch.note && !input.lunch.photoDataUri &&
+      !input.dinner.note && !input.dinner.photoDataUri) {
+      return {
+        summary: "기록된 식단이 없습니다. 아침, 점심, 저녁 식사를 기록하고 분석 버튼을 눌러주세요.",
+        analysis: [],
+      };
     }
 
-    const {output} = await prompt(input);
+
+    let output: AnalyzeDietOutput | null = null;
+    try {
+      const result = await prompt(input);
+      output = result.output;
+    } catch (error) {
+      console.error("AI Analysis Failed (Falling back to demo mode):", error);
+      // Fallback Mock Data
+      output = {
+        summary: "[데모 모드] AI API 키가 설정되지 않아 데모 분석 결과를 보여드립니다. 훌륭한 식단이네요! 탄수화물, 단백질, 비타민이 골고루 포함된 균형 잡힌 식사입니다. (실제 분석을 위해서는 GOOGLE_GENAI_API_KEY 설정이 필요합니다)",
+        analysis: [
+          {
+            group: '곡물',
+            status: '적정',
+            recommendation: '잡곡밥을 선택하여 식이섬유 섭취를 늘리신 점이 아주 좋습니다.'
+          },
+          {
+            group: '단백질',
+            status: '적정',
+            recommendation: '식사에 포함된 단백질은 근육 유지에 큰 도움이 됩니다.'
+          },
+          {
+            group: '채소',
+            status: '부족',
+            recommendation: '식사에 나물이나 쌈 채소를 조금 더 곁들이면 더욱 완벽하겠어요.'
+          }
+        ]
+      };
+    }
+
     if (!output) {
       throw new Error("식단 분석에 실패했습니다: AI 모델이 유효한 출력을 반환하지 않았습니다.");
     }

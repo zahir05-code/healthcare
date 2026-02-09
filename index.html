@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="우리 가족을 위한 스마트 헬스케어 서비스">
+    <title>✨ 케어 커넥트 (CareConnect) - 헬스케어</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Kakao JavaScript SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- 배경 장식 -->
+        <div class="bg-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- 메인 로고 및 헤더 -->
+        <header class="main-header" id="mainHeader">
+            <h1 class="logo-title">케어 커넥트</h1>
+            <p class="logo-subtitle">환자와 가족을 잇는 따뜻한 연결</p>
+        </header>
+
+        <!-- [0단계] 첫 화면: 통합 로그인 (Centered Hero) -->
+        <main class="login-screen" id="loginScreen">
+            <div class="login-hero-card">
+                <div class="card-icon">🏥</div>
+                <h2>케어 커넥트 시작하기</h2>
+                <p>소셜 계정으로 편리하게 로그인하고<br>우리 가족의 건강 관리를 시작하세요.</p>
+
+                <div class="login-btn-group">
+                    <!-- 카카오 로그인 (우선 순위) -->
+                    <button class="kakao-card-btn" onclick="loginWithKakao()">
+                        <img src="kakao_login_medium_narrow.png" alt="카카오 로그인">
+                    </button>
+                    <!-- 구글 로그인 -->
+                    <div class="g-btn-container">
+                        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_blue"
+                            data-text="signin_with" data-shape="rectangular" data-logo_alignment="left"
+                            data-width="300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- [1단계] 모드 선택 화면 (로그인 후 표시) -->
+        <main class="dashboard-grid" id="mainDashboard" style="display: none;">
+            <!-- 어르신 모드 선택 -->
+            <div class="choice-card senior-card" onclick="handleModeSelection('senior')">
+                <div class="card-icon">🧓</div>
+                <h2>어르신 모드</h2>
+                <p>오늘의 활동과<br>건강 상태 확인</p>
+            </div>
+
+            <!-- 보호자 모드 선택 -->
+            <div class="choice-card guardian-card" onclick="handleModeSelection('guardian')">
+                <div class="card-icon">🏠</div>
+                <h2>보호자 모드</h2>
+                <p>가족의 안부를<br>실시간으로 확인</p>
+            </div>
+        </main>
+
+        <!-- [2단계] 어르신 전용 상세 페이지 -->
+        <main class="detailed-page senior-view" id="seniorPage" style="display: none;">
+            <div class="view-header">
+                <button class="back-btn" onclick="goBackToHome()">◀ 홈으로</button>
+                <h2>🧓 어르신 맞춤형 대시보드</h2>
+            </div>
+            <div class="health-stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">❤️ 심박수</span>
+                    <span class="stat-value">72 <small>bpm</small></span>
+                    <span class="stat-status normal">정상</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">🚶 오늘의 걸음</span>
+                    <span class="stat-value">3,150 <small>보</small></span>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 45%;"></div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <span class="stat-label">💊 약 드실 시간</span>
+                    <span class="stat-value">오전 9:00</span>
+                    <span class="stat-status pending">복용 확인 전</span>
+                </div>
+            </div>
+            <div class="action-buttons-wrap">
+                <button class="action-btn-lg emergency" onclick="triggerEmergency()">🚨 도움 요청 (SOS)</button>
+            </div>
+        </main>
+
+        <!-- [2단계] 보호자 전용 상세 페이지 -->
+        <main class="detailed-page guardian-view" id="guardianPage" style="display: none;">
+            <div class="view-header">
+                <button class="back-btn" onclick="goBackToHome()">◀ 홈으로</button>
+                <h2>🏠 보호자 실시간 모니터링</h2>
+            </div>
+            <div class="monitor-grid">
+                <div class="monitor-card main-status">
+                    <h3>현재 위치 및 상태</h3>
+                    <div class="status-badge secure">안전함</div>
+                    <p class="last-seen">마지막 확인: 방금 전</p>
+                </div>
+                <div class="monitor-card-list">
+                    <div class="m-item">📅 오늘의 활동: 80% 완료</div>
+                    <div class="m-item">💤 수면 상태: 양호</div>
+                    <div class="m-item">🌡️ 체온: 36.5℃</div>
+                </div>
+            </div>
+            <div class="action-buttons-wrap">
+                <button class="action-btn-lg call" onclick="alert('어르신께 영상 통화를 연결합니다.')">📞 영상 통화 걸기</button>
+            </div>
+        </main>
+
+        <!-- 사용자 정보 (상단바) -->
+        <div class="user-status-bar" id="userStatusBar" style="display: none;">
+            <div class="status-info" onclick="openProfileModal()">
+                <img id="userAvatar" src="" alt="P">
+                <span id="userName">사용자</span>님
+            </div>
+            <button class="mini-logout-btn" onclick="signOut()">로그아웃</button>
+        </div>
+
+        <!-- 프로필 관리 모달 -->
+        <div class="modal-overlay" id="profileModal" onclick="closeProfileModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>👤 프로필 관리</h2>
+                    <button class="modal-close" onclick="closeProfileModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-avatar-section">
+                        <img class="profile-avatar-large" id="profileAvatar" src="" alt="프로필">
+                    </div>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label for="profileName">이름</label>
+                            <input type="text" id="profileName">
+                        </div>
+                        <div class="form-group">
+                            <label>이메일</label>
+                            <p class="profile-email" id="profileEmail">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-save" onclick="saveProfile()">💾 저장</button>
+                    <button class="btn-delete" onclick="deleteAccount()">🗑️ 회원 탈퇴</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그인 안내 모달 -->
+        <div class="modal-overlay" id="loginModal" onclick="closeLoginModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>서비스 이용 안내</h2>
+                    <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <p>상세 페이지를 확인하려면 먼저 로그인을 해주세요.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-save" style="flex:1" onclick="closeLoginModal()">확인</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <p>© 2026 CareConnect Healthcare System</p>
+        </footer>
+    </div>
+
+    <!-- 구글 로그인 설정을 위한 보이지 않는 요소 -->
+    <div id="g_id_onload" data-client_id="621014135510-cg4l1vjtj6uqo38n9p8a1iptieiavsb5.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse" data-auto_prompt="false">
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

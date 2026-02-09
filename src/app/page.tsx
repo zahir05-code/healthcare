@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Shield, VolumeX } from 'lucide-react';
+import { LoginDialog } from '@/components/LoginDialog';
+import { Users, Shield, VolumeX, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Home() {
@@ -74,11 +75,19 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative z-10 pb-4">
+      <div className="relative z-10 pb-4 flex flex-col items-center gap-4">
         <Button variant="ghost" onClick={handleStopSound} className="bg-white/80 hover:bg-white/95 dark:bg-black/60 dark:hover:bg-black/80 dark:text-white">
           <VolumeX className="mr-2 h-4 w-4" />
           알림 소리 끄기
         </Button>
+
+        {/* 메인 화면 하단 로그인 버튼 (카카오 스타일) */}
+        <LoginDialog>
+          <Button className="w-48 bg-[#FEE500] hover:bg-[#FDD800] text-black shadow-md">
+            <MessageCircle className="mr-2 h-4 w-4" />
+            카카오로 로그인
+          </Button>
+        </LoginDialog>
       </div>
     </main>
   );

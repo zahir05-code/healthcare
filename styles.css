@@ -2,21 +2,36 @@
    Healthcare System Premium Styles
 =================================== */
 :root {
-    --primary-blue: #A0D2EB;
-    --bg-light-blue: #F0F8FF;
-    --accent-orange: #E59866;
-    --kakao-yellow: yellow;
+    /* [Primary Colors] : 앱의 핵심이 되는 색상들 (주인공 색깔) */
+    --primary-blue: #6366f1;
+    /* 신뢰감을 주는 현대적인 인디고 블루 */
+    --primary-mint: #10b981;
+    /* 건강함을 상징하는 싱그러운 민트 */
+    --bg-light: #f8fafc;
+    /* 눈이 편안한 아주 연한 회색 배경 */
 
-    --text-primary: #2c3e50;
-    --text-secondary: #5d6d7e;
-    --text-muted: #abb2b9;
-    --danger: #e74c3c;
-    --success: #1abc9c;
+    /* [Glassmorphism Tokens] : 유리처럼 투명하고 영롱한 느낌을 만드는 재료들 */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 
-    --radius-md: 16px;
+    /* [Text Colors] : 글자색 (가독성을 위한 진하기 조절) */
+    --text-main: #1e293b;
+    /* 아주 진한 회색 (제목용) */
+    --text-sub: #475569;
+    /* 중간 회색 (본문용) */
+    --text-light: #94a3b8;
+    /* 연한 회색 (설명용) */
+
+    /* [Status Colors] : 상태를 나타내는 색 (신호등 같은 역할) */
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+
+    /* [Radius] : 모서리 둥글기 (둥글수록 부드러운 인상을 줌) */
+    --radius-xl: 32px;
     --radius-lg: 24px;
-    --radius-sm: 8px;
-    --shadow: 0 10px 30px rgba(160, 210, 235, 0.2);
+    --radius-md: 16px;
 }
 
 * {
@@ -26,22 +41,26 @@
 }
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg-light-blue);
-    color: var(--text-primary);
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-main);
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .app-container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 60px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
-/* 배경 장식 */
+/* [Background Decoration] : 배경을 심심하지 않게 꾸며주는 추상적인 도형들 (무대 배경 장식) */
 .bg-decoration {
     position: fixed;
     top: 0;
@@ -49,21 +68,46 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at top right, #e0e7ff, transparent),
+        radial-gradient(circle at bottom left, #d1fae5, transparent);
 }
 
 .circle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.3;
-    filter: blur(60px);
+    filter: blur(80px);
+    /* 경계선을 아주 부드럽게 뭉개서 몽환적인 느낌을 줍니다 */
+    opacity: 0.5;
+    animation: move 20s infinite alternate;
+    /* 천천히 움직이게 해서 살아있는 느낌을 줍니다 */
 }
 
 .circle-1 {
+    width: 600px;
+    height: 600px;
+    background: #c7d2fe;
+    top: -200px;
+    right: -100px;
+}
+
+.circle-2 {
     width: 400px;
     height: 400px;
-    background: var(--primary-blue);
-    top: -100px;
+    background: #a7f3d0;
+    bottom: -100px;
     left: -100px;
+    animation-delay: -5s;
+}
+
+@keyframes move {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(50px, 50px) scale(1.1);
+    }
 }
 
 .circle-2 {
@@ -81,16 +125,33 @@ body {
 }
 
 .logo-title {
-    font-size: 3.5rem;
-    color: #3498db;
-    margin-bottom: 10px;
+    font-size: 4rem;
+    margin-bottom: 12px;
     font-weight: 800;
-    letter-spacing: -2px;
+    letter-spacing: -3px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.premium-text {
+    background: linear-gradient(to right, var(--primary-blue), var(--primary-mint));
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* [Standard Property] : 표준 속성을 추가하여 여러 브라우저에서 잘 보이게 합니다 */
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .logo-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
+    font-size: 1.25rem;
+    color: var(--text-sub);
+    font-weight: 400;
 }
 
 /* 로그인 스크린 (첫 화면) */
@@ -101,13 +162,23 @@ body {
     animation: fadeIn 0.8s ease;
 }
 
+/* [Login Hero Card] : 로그인 상자 (집으로 들어오는 현관문) */
 .login-hero-card {
-    background: #fff;
-    border-radius: var(--radius-lg);
-    padding: 60px 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    /* [Backdrop Filter] : 뒷배경을 뿌옇게 만들어 고급스러운 유리를 표현합니다 */
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-xl);
+    padding: 80px 48px;
     text-align: center;
-    box-shadow: 0 20px 50px rgba(160, 210, 235, 0.4);
-    border: 1px solid rgba(160, 210, 235, 0.2);
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-hero-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
 }
 
 .login-hero-card .card-icon {
@@ -158,21 +229,32 @@ body {
     margin-bottom: 50px;
 }
 
+/* [Choice Card] : 모드 선택 버튼 (어떤 길로 갈지 고르는 표지판) */
 .choice-card {
-    background: #fff;
-    border: 1px solid rgba(160, 210, 235, 0.3);
-    border-radius: var(--radius-lg);
-    padding: 50px 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 60px 40px;
     text-align: center;
     cursor: pointer;
-    position: relative;
-    box-shadow: var(--shadow);
-    transition: all 0.4s ease;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* [Cubic Bezier] : 팅기는 듯한 찰진 애니메이션 효과 */
 }
 
 .choice-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.senior-card:hover {
+    border-bottom: 8px solid var(--primary-mint);
+}
+
+.guardian-card:hover {
+    border-bottom: 8px solid var(--primary-blue);
 }
 
 .card-icon {
@@ -254,21 +336,24 @@ body {
     object-fit: fill;
 }
 
-/* 상세 페이지 공통 */
+/* [Detailed Page] : 상세 화면 (방 안으로 들어왔을 때 보이는 모습) */
 .detailed-page {
     width: 100%;
-    max-width: 900px;
-    background: #fff;
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    box-shadow: var(--shadow);
-    animation: slideUp 0.6s ease;
+    max-width: 1000px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl);
+    padding: 60px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
 
     to {
@@ -308,12 +393,21 @@ body {
     gap: 20px;
 }
 
+/* [Stat Card] : 건강 정보 카드 (작은 액자 같은 정보창) */
 .stat-card {
-    background: #f8fbfe;
-    padding: 30px;
-    border-radius: var(--radius-md);
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius-lg);
     text-align: center;
     position: relative;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
 .stat-label {
@@ -433,51 +527,62 @@ body {
     gap: 20px;
 }
 
+/* [Action Button] : 행동 버튼 (꼭 눌러야 하는 핵심 버튼) */
 .action-btn-lg {
     flex: 1;
-    padding: 25px;
+    padding: 24px;
     border: none;
-    border-radius: var(--radius-md);
-    font-size: 1.3rem;
-    font-weight: 800;
+    border-radius: var(--radius-lg);
+    font-size: 1.25rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .action-btn-lg.emergency {
-    background: var(--danger);
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    /* 그라데이션을 넣어 더 강렬하게 보입니다 */
     color: white;
 }
 
 .action-btn-lg.call {
-    background: #3498db;
+    background: linear-gradient(135deg, var(--primary-blue), #4338ca);
     color: white;
 }
 
 .action-btn-lg:hover {
-    transform: scale(1.02);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
 }
 
 /* 사용자 상단바 */
+/* [User Status Bar] : 상단 상태바 (누가 로그인했는지 보여주는 이름표) */
 .user-status-bar {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: white;
-    padding: 10px 20px;
-    border-radius: 50px;
+    top: 24px;
+    right: 24px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 16px;
+    border-radius: 9999px;
+    /* 완전한 타원형으로 만듭니다 */
     display: flex;
     align-items: center;
-    gap: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    gap: 12px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
     z-index: 100;
 }
 
 #userAvatar {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 2px solid var(--primary-blue);
+    border: 2px solid white;
+    object-fit: cover;
 }
 
 .mini-logout-btn {

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>헬스케어 - 프리미엄 실버 케어</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec6d",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102218",
+                        "kakao": "#FEE500",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .glass-card {
+            background: rgba(16, 34, 24, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary/30">
+<!-- Background Layer with Blurred Nature Scene -->
+<div class="fixed inset-0 z-0 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center scale-110" data-alt="Serene blurred forest with soft sage green and blue tones" style="background-image: linear-gradient(to bottom, rgba(246, 248, 247, 0.4), rgba(246, 248, 247, 0.8)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXNbwzJ1YpMHLHMuuproJ17gnDBVCE7jZLMZWa1tDeutkRI88j7-j_ohWjDoSLsO7rpJ3U-QhvcimP2cbhnQkO264s_USUITrPTqTIOEdNtqv9PreCwprrjFK0XMf_sz7vGEQ2QFKW36NWnMmsq7CtdUmNKFpdLqZQdmAnc9oNUzf8WuX-cSBXv1MW7nocSwCWE2StpHp6OZBWhaLCtflN_i7-soXdFKwEMiIqJaHBwbVwybBoNOmAqdz-qj3RY9w01KWeEOsr4I35');">
+</div>
+</div>
+<div class="relative z-10 flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg">
+<span class="material-symbols-outlined text-slate-900 text-3xl font-bold">medical_services</span>
+</div>
+<h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">헬스케어</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-lg font-semibold hover:text-primary transition-colors" href="#">서비스 소개</a>
+<a class="text-lg font-semibold hover:text-primary transition-colors" href="#">이용 안내</a>
+<a class="text-lg font-semibold hover:text-primary transition-colors" href="#">고객센터</a>
+<div class="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center justify-center px-4 py-12 max-w-7xl mx-auto w-full">
+<!-- Hero Title -->
+<div class="text-center mb-16">
+<h2 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
+                    어르신을 위한 든든한 <span class="text-primary">디지털 도우미</span>입니다.
+                </h2>
+<p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-medium">
+                    가족의 건강과 안녕을 실시간으로 확인하고 소통하세요.
+                </p>
+</div>
+<!-- Main Portal Cards -->
+<div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
+<!-- Senior Card -->
+<button class="glass-card group flex flex-col items-center p-12 rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 text-center">
+<div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-6xl" style="font-variation-settings: 'FILL' 1">elderly</span>
+</div>
+<h3 class="text-4xl font-bold mb-4">어르신</h3>
+<p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                        매일매일 건강 상태를<br/>쉽고 간단하게 기록하세요
+                    </p>
+<div class="mt-8 flex items-center text-primary font-bold text-lg group-hover:translate-x-2 transition-transform">
+                        시작하기 <span class="material-symbols-outlined ml-1">chevron_right</span>
+</div>
+</button>
+<!-- Guardian Card -->
+<button class="glass-card group flex flex-col items-center p-12 rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 text-center">
+<div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-6xl" style="font-variation-settings: 'FILL' 1">family_restroom</span>
+</div>
+<h3 class="text-4xl font-bold mb-4">보호자</h3>
+<p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                        부모님의 활동량과<br/>건강 알림을 받아보세요
+                    </p>
+<div class="mt-8 flex items-center text-primary font-bold text-lg group-hover:translate-x-2 transition-transform">
+                        시작하기 <span class="material-symbols-outlined ml-1">chevron_right</span>
+</div>
+</button>
+</div>
+<!-- Footer Actions -->
+<div class="mt-20 flex flex-col items-center gap-10 w-full max-w-md">
+<!-- Kakao Login Button -->
+<button class="w-full h-16 bg-kakao hover:brightness-95 transition-all rounded-xl flex items-center justify-center gap-3 shadow-lg">
+<svg class="w-7 h-7" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.558 1.707 4.8 4.315 6.091l-.81 2.962c-.06.21.054.44.253.511.066.024.135.032.203.023.11-.013.21-.073.272-.167l3.414-5.118c.443.054.897.083 1.353.083 4.97 0 9-3.185 9-7.115S16.97 3 12 3z"></path>
+</svg>
+<span class="text-xl font-bold text-slate-900">카카오로 로그인</span>
+</button>
+<!-- Utility Toggles -->
+<div class="flex items-center justify-between w-full px-4 py-3 glass-card rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">volume_up</span>
+<span class="text-lg font-bold">알림 소리 끄기</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</main>
+<footer class="p-8 text-center text-slate-500 dark:text-slate-500 font-medium">
+<p>© 2024 헬스케어. 모든 권리 보유. | 개인정보 처리방침 | 약관</p>
+</footer>
+</div>
+</body></html>

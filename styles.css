@@ -1,37 +1,12 @@
-/* ===================================
-   Healthcare System Premium Styles
-=================================== */
+/* Healthcare Core Styles - Ghibli Redesign */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
 :root {
-    /* [Primary Colors] : 앱의 핵심이 되는 색상들 (주인공 색깔) */
-    --primary-blue: #6366f1;
-    /* 신뢰감을 주는 현대적인 인디고 블루 */
-    --primary-mint: #10b981;
-    /* 건강함을 상징하는 싱그러운 민트 */
-    --bg-light: #f8fafc;
-    /* 눈이 편안한 아주 연한 회색 배경 */
-
-    /* [Glassmorphism Tokens] : 유리처럼 투명하고 영롱한 느낌을 만드는 재료들 */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.5);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-
-    /* [Text Colors] : 글자색 (가독성을 위한 진하기 조절) */
-    --text-main: #1e293b;
-    /* 아주 진한 회색 (제목용) */
-    --text-sub: #475569;
-    /* 중간 회색 (본문용) */
-    --text-light: #94a3b8;
-    /* 연한 회색 (설명용) */
-
-    /* [Status Colors] : 상태를 나타내는 색 (신호등 같은 역할) */
-    --danger: #ef4444;
-    --success: #10b981;
-    --warning: #f59e0b;
-
-    /* [Radius] : 모서리 둥글기 (둥글수록 부드러운 인상을 줌) */
-    --radius-xl: 32px;
-    --radius-lg: 24px;
-    --radius-md: 16px;
+    --primary: #FEE500;
+    --secondary: #3B82F6;
+    --background-ghibli: linear-gradient(135deg, #5EC576 0%, #2D8C66 60%, #1E5F48 100%);
+    --card-warm: rgba(255, 248, 220, 0.92);
+    --glass-white: rgba(255, 255, 255, 0.15);
 }
 
 * {
@@ -41,604 +16,185 @@
 }
 
 body {
-    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-    background: var(--bg-light);
-    color: var(--text-main);
-    min-height: 100vh;
+    font-family: "Noto Sans KR", sans-serif;
+    background: var(--background-ghibli);
+    min-h-screen;
+    color: white;
     overflow-x: hidden;
+    position: relative;
+}
+
+.leaf-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPf_qurnapLxP8Ckk6iYMBw5lcjbkl1aciRkSNSSiVqfDUNLA6roETiPpAYx6H8BVKeLqXnSP3pNQHAX3OFuvDRrpRDmugZS8DNEmj4YAa1D83cMBayJpUNJC70eT_Yk-FPEV0_xqjeMyvnPIuazKSTZLnWFKN74wd5FxwmCTGh-RST2gV2pK2mId_75E7wcVUODL-5GBevFHCcHDmNMhfbAW6GfJcuBH8NutdDAOYmmtR5Rq-4pHHpmj9X6cOE1iRB2Zpqxk_oA8-');
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .app-container {
+    position: relative;
+    z-index: 10;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
+    padding: 0 20px;
 }
 
-/* [Background Decoration] : 배경을 심심하지 않게 꾸며주는 추상적인 도형들 (무대 배경 장식) */
-.bg-decoration {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    background: radial-gradient(circle at top right, #e0e7ff, transparent),
-        radial-gradient(circle at bottom left, #d1fae5, transparent);
-}
-
-.circle {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    /* 경계선을 아주 부드럽게 뭉개서 몽환적인 느낌을 줍니다 */
-    opacity: 0.5;
-    animation: move 20s infinite alternate;
-    /* 천천히 움직이게 해서 살아있는 느낌을 줍니다 */
-}
-
-.circle-1 {
-    width: 600px;
-    height: 600px;
-    background: #c7d2fe;
-    top: -200px;
-    right: -100px;
-}
-
-.circle-2 {
-    width: 400px;
-    height: 400px;
-    background: #a7f3d0;
-    bottom: -100px;
-    left: -100px;
-    animation-delay: -5s;
-}
-
-@keyframes move {
-    from {
-        transform: translate(0, 0) scale(1);
-    }
-
-    to {
-        transform: translate(50px, 50px) scale(1.1);
-    }
-}
-
-.circle-2 {
-    width: 300px;
-    height: 300px;
-    background: var(--accent-orange);
-    bottom: -50px;
-    right: -50px;
-}
-
-/* 헤더 */
 .main-header {
-    text-align: center;
-    margin-bottom: 50px;
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo-title {
-    font-size: 4rem;
-    margin-bottom: 12px;
-    font-weight: 800;
-    letter-spacing: -3px;
-    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
 }
 
-.premium-text {
-    background: linear-gradient(to right, var(--primary-blue), var(--primary-mint));
-    -webkit-background-clip: text;
-    background-clip: text;
-    /* [Standard Property] : 표준 속성을 추가하여 여러 브라우저에서 잘 보이게 합니다 */
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: shine 4s linear infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.logo-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-sub);
-    font-weight: 400;
-}
-
-/* 로그인 스크린 (첫 화면) */
-.login-screen {
-    width: 100%;
-    max-width: 500px;
-    margin: 20px 0;
-    animation: fadeIn 0.8s ease;
-}
-
-/* [Login Hero Card] : 로그인 상자 (집으로 들어오는 현관문) */
-.login-hero-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    /* [Backdrop Filter] : 뒷배경을 뿌옇게 만들어 고급스러운 유리를 표현합니다 */
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: var(--radius-xl);
-    padding: 80px 48px;
-    text-align: center;
-    box-shadow: var(--glass-shadow);
-    border: 1px solid var(--glass-border);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.login-hero-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
-}
-
-.login-hero-card .card-icon {
-    font-size: 5rem;
-    margin-bottom: 25px;
-}
-
-.login-hero-card h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #2c3e50;
-    margin-bottom: 15px;
-}
-
-.login-hero-card p {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
-
-.login-btn-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 대시보드 그리드 및 카드 */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
-    margin-bottom: 50px;
-}
-
-/* [Choice Card] : 모드 선택 버튼 (어떤 길로 갈지 고르는 표지판) */
-.choice-card {
-    background: var(--glass-bg);
+.warm-card {
+    background: var(--card-warm);
     backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-xl);
-    padding: 60px 40px;
-    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+    border-radius: 2.5rem;
+    padding: 2rem;
+    color: #1F2937;
+    transition: transform 0.3s ease;
     cursor: pointer;
-    box-shadow: var(--glass-shadow);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* [Cubic Bezier] : 팅기는 듯한 찰진 애니메이션 효과 */
 }
 
-.choice-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.9);
+.warm-card:hover {
+    transform: translateY(-10px);
 }
 
-.senior-card:hover {
-    border-bottom: 8px solid var(--primary-mint);
+.glass-notification {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 2rem;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.guardian-card:hover {
-    border-bottom: 8px solid var(--primary-blue);
+.login-hero {
+    text-align: center;
+    padding: 4rem 0;
 }
 
-.card-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
+.login-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: #064E3B;
 }
 
-.choice-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 12px;
+.login-hero p {
+    font-size: 1.25rem;
     font-weight: 700;
+    opacity: 0.8;
+    color: #064E3B;
 }
 
-.choice-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-/* 잠금 오버레이 */
-.lock-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(2px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg);
-    font-weight: 700;
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    pointer-events: none;
-}
-
-/* 로그인 카드 */
-.auth-integration-card {
-    cursor: default;
-}
-
-.auth-integration-card:hover {
-    transform: none;
-}
-
-.card-login-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
-    align-items: center;
-}
-
-.g-btn-container,
-.kakao-card-btn {
-    width: 300px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.kakao-card-btn {
-    background: none;
+.kakao-btn {
+    background: var(--primary);
+    color: black;
+    font-weight: 900;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
     border: none;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-.kakao-card-btn:hover {
-    transform: scale(1.02);
+.kakao-btn:hover {
+    transform: scale(1.05);
 }
 
-.kakao-card-btn img {
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    object-fit: fill;
-}
-
-/* [Detailed Page] : 상세 화면 (방 안으로 들어왔을 때 보이는 모습) */
-.detailed-page {
-    width: 100%;
-    max-width: 1000px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-xl);
-    padding: 60px;
-    box-shadow: var(--glass-shadow);
-    border: 1px solid var(--glass-border);
-    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.view-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-    border-bottom: 2px solid #f0f8ff;
-    padding-bottom: 20px;
-}
-
-.back-btn {
-    background: none;
-    border: 1px solid var(--text-muted);
-    color: var(--text-muted);
-    padding: 8px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.back-btn:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
-}
-
-/* 어르신 모드 통계 */
-.health-stats-grid {
+.dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
 }
 
-/* [Stat Card] : 건강 정보 카드 (작은 액자 같은 정보창) */
-.stat-card {
+.card-image-box {
     background: white;
-    padding: 32px;
-    border-radius: var(--radius-lg);
-    text-align: center;
-    position: relative;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-}
-
-.stat-label {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    margin-bottom: 12px;
-    display: block;
-}
-
-.stat-value {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #34495e;
-    display: block;
-}
-
-.stat-value small {
-    font-size: 1rem;
-    color: var(--text-muted);
-}
-
-.stat-status {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 15px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.stat-status.normal {
-    background: #e8f8f5;
-    color: var(--success);
-}
-
-.stat-status.pending {
-    background: #fef5e7;
-    color: #f39c12;
-}
-
-/* 프로그레스 바 */
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: #eee;
-    border-radius: 5px;
-    margin-top: 15px;
+    border-radius: 1.5rem;
+    height: 200px;
+    margin-bottom: 1.5rem;
     overflow: hidden;
+    position: relative;
 }
 
-.progress {
+.card-image-box img {
+    width: 100%;
     height: 100%;
-    background: #3498db;
-}
-
-/* 애니메이션 */
-.pulse {
-    animation: pulseAnim 2s infinite;
-}
-
-@keyframes pulseAnim {
-    0% {
-        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
-    }
-
-    70% {
-        box-shadow: 0 0 0 15px rgba(231, 76, 60, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
-    }
-}
-
-/* 보호자 모드 모니터링 */
-.monitor-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.monitor-card {
-    background: #f8fbfe;
-    padding: 30px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-}
-
-.status-badge {
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 50px;
-    color: white;
-    font-weight: 700;
-    margin-top: 15px;
-}
-
-.status-badge.secure {
-    background: var(--success);
-}
-
-.m-item {
-    padding: 15px;
-    border-bottom: 1px solid #edf2f7;
-    font-weight: 500;
-}
-
-.m-item:last-child {
-    border-bottom: none;
-}
-
-/* 액션 버튼 */
-.action-buttons-wrap {
-    margin-top: 40px;
-    display: flex;
-    gap: 20px;
-}
-
-/* [Action Button] : 행동 버튼 (꼭 눌러야 하는 핵심 버튼) */
-.action-btn-lg {
-    flex: 1;
-    padding: 24px;
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: 1.25rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.action-btn-lg.emergency {
-    background: linear-gradient(135deg, #ef4444, #b91c1c);
-    /* 그라데이션을 넣어 더 강렬하게 보입니다 */
-    color: white;
-}
-
-.action-btn-lg.call {
-    background: linear-gradient(135deg, var(--primary-blue), #4338ca);
-    color: white;
-}
-
-.action-btn-lg:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-    filter: brightness(1.1);
-}
-
-/* 사용자 상단바 */
-/* [User Status Bar] : 상단 상태바 (누가 로그인했는지 보여주는 이름표) */
-.user-status-bar {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 8px 16px;
-    border-radius: 9999px;
-    /* 완전한 타원형으로 만듭니다 */
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: var(--glass-shadow);
-    border: 1px solid var(--glass-border);
-    z-index: 100;
-}
-
-#userAvatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
     object-fit: cover;
 }
 
-.mini-logout-btn {
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    background: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+@keyframes shine {
+    0% {
+        transform: translateX(-150%) skewX(-12deg);
+    }
+
+    50% {
+        transform: translateX(150%) skewX(-12deg);
+    }
+
+    100% {
+        transform: translateX(150%) skewX(-12deg);
+    }
 }
 
-/* 모달 */
-.modal-overlay {
-    position: fixed;
+.shine-effect {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: skewX(-12deg);
+    animation: shine 3s infinite;
 }
 
-.modal-overlay.show {
-    display: flex;
-}
-
-.modal-content {
-    background: white;
-    padding: 40px;
-    border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 450px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 2rem;
+/* Switches and UI elements */
+.switch {
+    width: 50px;
+    height: 26px;
+    background: #4B5563;
+    border-radius: 13px;
+    position: relative;
     cursor: pointer;
-    color: var(--text-muted);
 }
 
-/* 푸터 */
-.app-footer {
-    margin-top: 50px;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+.switch.active {
+    background: #10B981;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.switch.active::after {
+    transform: translateX(24px);
 }

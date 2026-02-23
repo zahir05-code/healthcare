@@ -39,6 +39,8 @@ app.get('/app.js', (req, res) => res.sendFile(path.join(__dirname, 'app.js')));
 app.get('/styles.css', (req, res) => res.sendFile(path.join(__dirname, 'styles.css')));
 app.get('/kakao-callback.html', (req, res) => res.sendFile(path.join(__dirname, 'kakao-callback.html')));
 app.get('/kakao_login_medium_narrow.png', (req, res) => res.sendFile(path.join(__dirname, 'kakao_login_medium_narrow.png')));
+app.get('/assets/senior_bg.png', (req, res) => res.sendFile(path.join(__dirname, 'public', 'assets', 'senior_bg.png')));
+app.get('/assets/guardian_bg.png', (req, res) => res.sendFile(path.join(__dirname, 'public', 'assets', 'guardian_bg.png')));
 
 // ===================================
 // 카카오 OAuth 설정
@@ -238,17 +240,46 @@ app.delete('/api/users/:id', async (req, res) => {
 });
 
 // ===================================
-// 서버 시작
+// 서버 시작 및 에러 핸들링
 // ===================================
-app.listen(PORT, HOST, () => {
+
+// 헬스체크 엔드포인트 추가
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        firebase: admin.apps.length > 0 ? 'connected' : 'disconnected'
+    });
+});
+
+const server = app.listen(PORT, HOST, () => {
     console.log('');
     console.log('✨ ===================================');
     console.log(`🚀 Firebase 연동 To-Do 서버 시작!`);
     console.log(`📍 URL: http://localhost:${PORT}`);
     console.log('✨ ===================================');
+}).on('error', (err) => {
+    console.error('❌ 서버 시작 오류:', err.message);
+    if (err.code === 'EADDRINUSE') {
+        console.error(`⚠️ 포트 ${PORT}가 이미 사용 중입니다. 다른 프로세스를 종료하거나 포트를 변경해 주세요.`);
+    }
+    process.exit(1);
+});
+
+// 예기치 못한 에러 처리 (블랙박스 기록용)
+process.on('uncaughtException', (err) => {
+    console.error('🚑 예기치 못한 오류(Uncaught Exception):', err);
+    // 필요시 로그 파일 기록 로직 추가 가능
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('🚑 처리되지 않은 거부(Unhandled Rejection):', reason);
 });
 
 process.on('SIGINT', () => {
-    console.log('\n👋 서버 종료');
-    process.exit(0);
+    console.log('\n👋 서버 종료 (SIGINT)');
+    server.close(() => {
+        console.log('🔒 모든 연결이 종료되었습니다.');
+        process.exit(0);
+    });
 });

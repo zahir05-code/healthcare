@@ -1,53 +1,10 @@
+# Dependencies
 node_modules/
-.env
-todos.db
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-node_modules/
-.env
-.todos.db
-# dependencies
 /node_modules
 /.pnp
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-# next-env.d.ts is ignored by default in some templates, but often good to track. 
-# Keeping existing rule if preferred, or remove to track it.
-next-env.d.ts
-
-# Genkit
-.genkit/*
-
-# Environment variables & Secrets (IMPORTANT)
+# Environment variables & Secrets (CRITICAL)
 # These files contain API keys, passwords, and other sensitive information.
 # MUST NOT be committed to git.
 .env
@@ -56,8 +13,28 @@ next-env.d.ts
 .env.test.local
 .env.production.local
 .env*.local
+serviceAccountKey.json
+*.pem
 
-# Firebase
+# Database & Local Data
+todos.db
+.todos.db
+db_schema.json.tmp
+
+# Testing
+/coverage
+
+# Next.js build output
+/.next/
+/out/
+/build
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 firebase-debug.log
 firestore-debug.log
 
@@ -69,19 +46,15 @@ firestore-debug.log
 *.swo
 
 # OS generated files
+.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-node_modules/
-.env
-dist/
-build/
-.DS_Store
-node_modules/
-.env
-todos.db
-serviceAccountKey.json
-node_modules/
-.env
-todos.db
-serviceAccountKey.json
+
+# Genkit
+.genkit/
+
+# Misc
+.vercel
+*.tsbuildinfo
+next-env.d.ts
